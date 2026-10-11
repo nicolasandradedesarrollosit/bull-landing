@@ -1,0 +1,23 @@
+---
+/** The Bull logo, inline so it inherits nothing and needs no request. */
+interface Props {
+  size?: number;
+}
+const { size = 32 } = Astro.props;
+---
+
+<svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M19 20C10.5 20 4.5 15 4 5.5c3.5 5.8 9 8.6 17 9.2Z" fill="#fff1e3"></path>
+  <path d="M45 20c8.5 0 14.5-5 15-14.5c-3.5 5.8-9 8.6-17 9.2Z" fill="#fff1e3"></path>
+  <path d="M19.5 21 9 24.5l11.5 4Z" fill="#5a3df0"></path>
+  <path d="M44.5 21 55 24.5l-11.5 4Z" fill="#e2456f"></path>
+  <path d="M18 15h28L32 36Z" fill="#a78bfa"></path>
+  <path d="M18 15l14 21v21h-6L20.5 34Z" fill="#6b4dff"></path>
+  <path d="M46 15 32 36v21h6l5.5-23Z" fill="#f0507c"></path>
+  <path d="m23.5 28.5 4.5 1.5-4 1.8Z" fill="#160f24"></path>
+  <path d="m40.5 28.5-4.5 1.5 4 1.8Z" fill="#160f24"></path>
+  <rect x="23" y="45" width="18" height="12" rx="6" fill="#33224a"></rect>
+  <ellipse cx="28" cy="50.5" rx="1.6" ry="2.2" fill="#ff7aa2"></ellipse>
+  <ellipse cx="36" cy="50.5" rx="1.6" ry="2.2" fill="#ff7aa2"></ellipse>
+  <path d="M28.5 56.5a3.5 3.5 0 0 0 7 0" fill="none" stroke="#fff4e6" stroke-width="1.8" stroke-linecap="round"></path>
+</svg>

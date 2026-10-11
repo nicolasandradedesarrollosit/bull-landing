@@ -1,0 +1,258 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const layers = [
+  {
+    name: "View",
+    file: "*.view.tsx",
+    color: "var(--view)",
+    does: "Renders. Reads with useBinding, acts with commands.",
+    never: ["Import the Model", "useState / useEffect", "fetch or storage", "Write to the ViewModel"],
+  },
+  {
+    name: "ViewModel",
+    file: "*.viewmodel.ts",
+    color: "var(--violet)",
+    does: "Owns a screen’s state and actions, as a plain class.",
+    never: ["Import React or a View", "Touch document or window", "Expose mutable state", "Create its own repositories"],
+  },
+  {
+    name: "Model",
+    file: "*.repository.ts · *.model.ts",
+    color: "var(--rose)",
+    does: "Entities, business rules and every bit of I/O.",
+    never: ["Import ViewModels or Views", "Use React", "Use reactive state", "Touch the DOM"],
+  },
+];
+---
+
+<section class="layers" id="layers">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">The architecture</p>
+        <h2 class="poster">Three layers.<br />One direction.</h2>
+      </div>
+      <p>
+        Imports only go down the line. Every arrow against it is a build error with a code, an
+        explanation and a fix.
+      </p>
+    </div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 960 300" role="img" aria-labelledby="diagram-title">
+        <title id="diagram-title">
+          The View may import the ViewModel and the ViewModel may import the Model. The View importing
+          the Model (MVVM100), the ViewModel importing the View (MVVM101) and the Model importing the
+          ViewModel (MVVM102) are errors.
+        </title>
+        <defs>
+          <marker id="ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 10 5 0 10z" class="ok-head"></path>
+          </marker>
+          <marker id="no" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 10 5 0 10z" class="no-head"></path>
+          </marker>
+        </defs>
+
+        <!-- forbidden: View → Model, over the top -->
+        <path class="no" d="M150 105 C 260 10, 700 10, 810 105" marker-end="url(#no)"></path>
+        <g class="badge" transform="translate(480 38)">
+          <rect x="-66" y="-15" width="132" height="30" rx="15"></rect>
+          <text y="5">✗ MVVM100</text>
+        </g>
+
+        <!-- allowed -->
+        <path class="ok" d="M262 150 H 382" marker-end="url(#ok)"></path>
+        <path class="ok" d="M578 150 H 698" marker-end="url(#ok)"></path>
+
+        <!-- forbidden backwards edges, underneath -->
+        <path class="no" d="M700 195 C 650 260, 600 260, 560 195" marker-end="url(#no)"></path>
+        <path class="no" d="M400 195 C 350 260, 300 260, 260 195" marker-end="url(#no)"></path>
+        <g class="badge" transform="translate(630 270)">
+          <rect x="-62" y="-15" width="124" height="30" rx="15"></rect>
+          <text y="5">✗ MVVM102</text>
+        </g>
+        <g class="badge" transform="translate(330 270)">
+          <rect x="-62" y="-15" width="124" height="30" rx="15"></rect>
+          <text y="5">✗ MVVM101</text>
+        </g>
+
+        <g class="node view" transform="translate(40 105)">
+          <rect width="220" height="90" rx="16"></rect>
+          <text x="110" y="56">VIEW</text>
+        </g>
+        <g class="node viewmodel" transform="translate(370 105)">
+          <rect width="220" height="90" rx="16"></rect>
+          <text x="110" y="56">VIEWMODEL</text>
+        </g>
+        <g class="node model" transform="translate(700 105)">
+          <rect width="220" height="90" rx="16"></rect>
+          <text x="110" y="56">MODEL</text>
+        </g>
+      </svg>
+    </figure>
+
+    <div class="cards">
+      {
+        layers.map((layer) => (
+          <article class="card" style={`--accent:${layer.color}`}>
+            <h3>{layer.name}</h3>
+            <p class="file">{layer.file}</p>
+            <p class="does">{layer.does}</p>
+            <p class="never-label">Never</p>
+            <ul>
+              {layer.never.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+    <p class="more">
+      <a href={`${base}/docs/concepts/layers/`}>How each layer works →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .layers {
+    --view: #1f9d5a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .layers {
+      --view: #4ad48a;
+    }
+  }
+
+  .diagram {
+    margin: 0 0 48px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .node rect {
+    fill: var(--card);
+    stroke-width: 3;
+  }
+
+  .node text {
+    font: 800 34px var(--display);
+    text-anchor: middle;
+    fill: var(--ink);
+    letter-spacing: 0.04em;
+  }
+
+  .node.view rect {
+    stroke: var(--view);
+  }
+  .node.viewmodel rect {
+    stroke: var(--violet);
+  }
+  .node.model rect {
+    stroke: var(--rose);
+  }
+
+  .ok {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 3;
+  }
+
+  .ok-head {
+    fill: var(--ink);
+  }
+
+  .no {
+    fill: none;
+    stroke: var(--rose);
+    stroke-width: 2.5;
+    stroke-dasharray: 7 7;
+  }
+
+  .no-head {
+    fill: var(--rose);
+  }
+
+  .badge rect {
+    fill: var(--rose);
+  }
+
+  .badge text {
+    font: 700 15px var(--mono);
+    fill: #fff;
+    text-anchor: middle;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 6px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .card h3 {
+    margin: 0;
+    font: 800 40px/1 var(--display);
+    text-transform: uppercase;
+  }
+
+  .file {
+    margin: 8px 0 16px;
+    font: 500 13px var(--mono);
+    color: var(--ink-soft);
+  }
+
+  .does {
+    margin: 0 0 18px;
+  }
+
+  .never-label {
+    margin: 0 0 6px;
+    font: 700 12px var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
+
+  li::before {
+    content: "✗ ";
+    color: var(--rose);
+  }
+
+  .more {
+    margin: 28px 0 0;
+    font-weight: 700;
+  }
+
+  @media (max-width: 860px) {
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

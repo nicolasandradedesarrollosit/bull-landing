@@ -1,0 +1,25 @@
+---
+import Closing from "../components/landing/Closing.astro";
+import CodeSample from "../components/landing/CodeSample.astro";
+import Enforcement from "../components/landing/Enforcement.astro";
+import Hero from "../components/landing/Hero.astro";
+import Layers from "../components/landing/Layers.astro";
+import Tooling from "../components/landing/Tooling.astro";
+import Landing from "../layouts/Landing.astro";
+
+const repoUrl = process.env.BULL_REPO_URL;
+---
+
+<Landing
+  title="Bull · The React bundler that enforces MVVM"
+  description="Bull is a React bundler that refuses to build unless your code respects Model–View–ViewModel, and explains every violation."
+>
+  <Hero repoUrl={repoUrl} />
+  <main>
+    <Layers />
+    <Enforcement />
+    <Tooling />
+    <CodeSample />
+  </main>
+  <Closing repoUrl={repoUrl} />
+</Landing>

@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import overlay from "../../assets/overlay.png";
+
+const places = [
+  { where: "bull build", what: "Checks before Vite runs. One error and there is no dist/, exit code 1." },
+  { where: "bull dev", what: "Re-checks on every save and shows each violation in a browser overlay." },
+  { where: "bull check", what: "The check alone, with --format json for CI." },
+  { where: "ESLint", what: "The same rules and codes, underlined in your editor as you type." },
+];
+---
+
+<section class="enforce">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Where the rules run</p>
+        <h2 class="poster">Same rules,<br />everywhere.</h2>
+      </div>
+      <p>
+        The rules live in one engine. The build, the dev server, CI and your editor all run that
+        engine, so they report the same code and the same explanation.
+      </p>
+    </div>
+
+    <div class="grid">
+      <figure class="shot">
+        <Image src={overlay} alt="The Bull dev overlay listing a View that imports the Model and a View that uses useState" widths={[480, 760, 996]} sizes="(max-width: 900px) 100vw, 640px" />
+        <figcaption>The dev overlay: the line, the reason and the steps to fix it.</figcaption>
+      </figure>
+      <dl class="places">
+        {
+          places.map((p) => (
+            <div>
+              <dt>
+                <code>{p.where}</code>
+              </dt>
+              <dd>{p.what}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .enforce {
+    border-top: 1px solid var(--line);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: start;
+  }
+
+  .shot {
+    margin: 0;
+  }
+
+  .shot img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 24px 48px -24px rgba(36, 22, 52, 0.5);
+  }
+
+  figcaption {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .places {
+    margin: 0;
+  }
+
+  .places div {
+    padding: 22px 0;
+    border-top: 2px solid var(--ink);
+  }
+
+  .places div:last-child {
+    border-bottom: 2px solid var(--ink);
+  }
+
+  dt code {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

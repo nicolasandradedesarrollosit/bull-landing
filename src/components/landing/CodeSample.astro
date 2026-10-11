@@ -1,0 +1,88 @@
+---
+import { Code } from "astro:components";
+
+const viewModel = `import { ViewModel } from "@bull/runtime";
+import type { CartRepository } from "../model/cart.repository";
+
+export class CartViewModel extends ViewModel {
+  readonly #items = this.state<Item[]>([]);
+
+  readonly items = this.#items.readonly;
+  readonly total = this.computed(() => sum(this.#items.value));
+  readonly pay = this.command(() => this.cart.pay(this.total.value));
+
+  constructor(private readonly cart: CartRepository) {
+    super();
+  }
+}`;
+
+const view = `import { useBinding, useViewModel } from "@bull/runtime/react";
+import { CartViewModel } from "../viewmodel/cart.viewmodel";
+
+export function CartView() {
+  const vm = useViewModel(CartViewModel);
+  const total = useBinding(vm.total);
+  const busy = useBinding(vm.pay.isRunning);
+
+  return (
+    <button onClick={vm.pay.execute} disabled={busy}>
+      Pay {total}
+    </button>
+  );
+}`;
+---
+
+<section class="sample">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">What it looks like</p>
+        <h2 class="poster">Plain classes.<br />Thin views.</h2>
+      </div>
+      <p>
+        The ViewModel is a TypeScript class you can test without React. The View binds to it and
+        calls its commands, nothing else.
+      </p>
+    </div>
+    <div class="pair">
+      <div>
+        <p class="label">src/viewmodel/cart.viewmodel.ts</p>
+        <Code code={viewModel} lang="ts" theme="github-dark-dimmed" />
+      </div>
+      <div>
+        <p class="label">src/view/cart.view.tsx</p>
+        <Code code={view} lang="tsx" theme="github-dark-dimmed" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .pair :global(pre) {
+    margin: 0;
+    padding: 20px 22px;
+    border-radius: 14px;
+    background: var(--terminal) !important;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+  }
+
+  .label {
+    margin: 0 0 8px;
+    font: 600 13px var(--mono);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 900px) {
+    .pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

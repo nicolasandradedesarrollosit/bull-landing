@@ -1,0 +1,329 @@
+---
+import BullMark from "./BullMark.astro";
+
+interface Props {
+  repoUrl?: string;
+}
+
+const { repoUrl } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// A real `bull build` run, replayed line by line. `t` is the line's role (for color).
+type Line = { t: "cmd" | "dim" | "head" | "msg" | "code" | "caret" | "text" | "fix" | "fail" | "blank"; s: string };
+const lines: Line[] = [
+  { t: "cmd", s: "npx bull build" },
+  { t: "blank", s: "" },
+  { t: "dim", s: "  ♉︎ bull v0.2.0  · build" },
+  { t: "blank", s: "" },
+  { t: "head", s: "── VIEW IMPORTS MODEL ── src/view/cart.view.tsx:3:1  MVVM100" },
+  { t: "blank", s: "" },
+  { t: "msg", s: "  The View imports CartRepository directly from the Model." },
+  { t: "blank", s: "" },
+  { t: "code", s: '  3 │ import { CartRepository } from "../model/cart.repository";' },
+  { t: "caret", s: "    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" },
+  { t: "blank", s: "" },
+  { t: "text", s: "  The View only knows its ViewModel. If it talks to the Model" },
+  { t: "text", s: "  directly, presentation logic gets tied to the UI." },
+  { t: "blank", s: "" },
+  { t: "fix", s: "  How to fix:" },
+  { t: "text", s: "    1. Move the use of CartRepository to CartViewModel." },
+  { t: "text", s: "    2. Expose the data as state and the actions as commands." },
+  { t: "blank", s: "" },
+  { t: "fail", s: "  ✗ Build cancelled: 1 MVVM architecture violation." },
+];
+
+const esc = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+// Built as one string: whitespace between the line spans would render inside <pre>.
+const screen = lines
+  .map((line, i) => {
+    const content =
+      line.t === "cmd"
+        ? `<span class="prompt">$ </span><span class="typed">${esc(line.s)}</span>`
+        : esc(line.s) || " ";
+    return `<span class="l ${line.t}" style="--i:${i}">${content}</span>`;
+  })
+  .join("");
+---
+
+<header class="hero">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href={`${base}/`}>
+      <BullMark size={34} />
+      <span>bull</span>
+    </a>
+    <div class="links">
+      <a href={`${base}/docs/introduction/`}>Docs</a>
+      <a href={`${base}/docs/cli/overview/`}>CLI</a>
+      <a href={`${base}/docs/rules/`}>Rules</a>
+      {repoUrl && <a href={repoUrl}>GitHub</a>}
+    </div>
+  </nav>
+
+  <div class="wrap stage">
+    <div class="pitch">
+      <p class="eyebrow">React bundler · MVVM enforced</p>
+      <h1 class="poster">It won’t<br />build.</h1>
+      <p class="lede">
+        Bull is a React bundler that enforces Model–View–ViewModel. Import the Model from a View,
+        keep state in a component or touch the DOM from a ViewModel, and the build stops with the
+        reason and the fix.
+      </p>
+      <div class="actions">
+        <a class="button primary" href={`${base}/docs/getting-started/`}>Get started</a>
+        <button class="copy" type="button" data-copy="npx @bull/cli create my-app">
+          npx @bull/cli create my-app <span data-copied>Copy</span>
+        </button>
+      </div>
+    </div>
+
+    <figure class="terminal" aria-label="A bull build that stops on an MVVM violation">
+      <div class="bar">
+        <span></span><span></span><span></span>
+        <button type="button" class="replay" aria-label="Replay the build">Replay</button>
+      </div>
+      <pre class="screen" data-playing><code set:html={screen} /></pre>
+    </figure>
+  </div>
+</header>
+
+<script>
+  const screen = document.querySelector<HTMLElement>(".terminal .screen");
+  document.querySelector(".terminal .replay")?.addEventListener("click", () => {
+    if (!screen) return;
+    screen.removeAttribute("data-playing");
+    void screen.offsetWidth; // restart the CSS animations
+    screen.setAttribute("data-playing", "");
+  });
+</script>
+
+<style>
+  .hero {
+    background: var(--albero);
+    color: #241634;
+    padding-bottom: clamp(56px, 8vw, 104px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Raked sand: faint arcs, like the lines a rake leaves in the bullring. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-radial-gradient(circle at 15% 120%, transparent 0 22px, rgba(36, 22, 52, 0.05) 22px 23px);
+    pointer-events: none;
+  }
+
+  .nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font: 800 30px/1 var(--display);
+    letter-spacing: 0.02em;
+  }
+
+  .links {
+    display: flex;
+    gap: clamp(14px, 3vw, 32px);
+    font-weight: 600;
+  }
+
+  .links a {
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .links a:hover {
+    border-bottom-color: currentColor;
+  }
+
+  .stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+    padding-top: clamp(32px, 6vw, 88px);
+  }
+
+  .pitch .eyebrow {
+    color: rgba(36, 22, 52, 0.7);
+  }
+
+  h1 {
+    font-size: clamp(84px, 10.5vw, 156px);
+    color: #241634;
+  }
+
+  .lede {
+    font-size: 19px;
+    max-width: 42ch;
+    margin: 28px 0 32px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .actions .button.primary {
+    background: #241634;
+    border-color: #241634;
+    color: #fcfbff;
+  }
+
+  .terminal {
+    margin: 0;
+    background: var(--terminal);
+    border-radius: 18px;
+    box-shadow: 0 30px 60px -20px rgba(36, 22, 52, 0.55), 0 0 0 1px rgba(36, 22, 52, 0.4);
+    overflow: hidden;
+    transform: rotate(-1.2deg);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #241634;
+  }
+
+  .bar > span {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #4b3a63;
+  }
+
+  .replay {
+    margin-left: auto;
+    background: none;
+    border: 1px solid #4b3a63;
+    color: #b3a8c6;
+    border-radius: 999px;
+    padding: 3px 12px;
+    font: 600 12px var(--body);
+    cursor: pointer;
+  }
+
+  .replay:hover {
+    color: #fff;
+  }
+
+  .screen {
+    margin: 0;
+    white-space: normal; /* the lines are blocks: ignore the whitespace between them */
+    padding: 20px 22px 26px;
+    font-size: clamp(10.5px, 1.05vw, 13px);
+    line-height: 1.6;
+    color: #d9d2e6;
+    overflow-x: auto;
+  }
+
+  .screen :global(.l) {
+    display: block;
+    white-space: pre;
+  }
+
+  .screen :global(.prompt) {
+    color: var(--albero);
+  }
+
+  .screen :global(.dim) {
+    color: #8a7da0;
+    /* Draw the Taurus glyph from a text symbol font, not the emoji font. */
+    font-family: var(--mono), "Segoe UI Symbol", "Noto Sans Symbols 2", "Apple Symbols", monospace;
+  }
+
+  .screen :global(.head) {
+    color: var(--rose);
+    font-weight: 700;
+  }
+
+  .screen :global(.msg) {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .screen :global(.code) {
+    color: #f3eefa;
+  }
+
+  .screen :global(.caret) {
+    color: var(--rose);
+  }
+
+  .screen :global(.text) {
+    color: #b3a8c6;
+  }
+
+  .screen :global(.fix) {
+    color: #7ee2a8;
+    font-weight: 700;
+  }
+
+  .screen :global(.fail) {
+    color: var(--rose);
+    font-weight: 700;
+  }
+
+  /* Replay: the command types itself, then the output appears line by line. */
+  [data-playing] :global(.l) {
+    animation: appear 0.01s both;
+    animation-delay: calc(1.2s + var(--i) * 0.11s);
+  }
+
+  [data-playing] :global(.l.cmd) {
+    animation: none;
+  }
+
+  [data-playing] :global(.typed) {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    animation: type 0.9s steps(15) 0.2s both;
+  }
+
+  @keyframes appear {
+    from {
+      visibility: hidden;
+    }
+  }
+
+  @keyframes type {
+    from {
+      width: 0;
+    }
+    to {
+      width: 15ch;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .stage {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .terminal {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .links a:nth-child(n + 2) {
+      display: none;
+    }
+  }
+</style>

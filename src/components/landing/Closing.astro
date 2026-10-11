@@ -1,0 +1,92 @@
+---
+import BullMark from "./BullMark.astro";
+
+interface Props {
+  repoUrl?: string;
+}
+
+const { repoUrl } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<section class="closing">
+  <div class="wrap inner">
+    <BullMark size={96} />
+    <h2 class="poster">Stubborn about<br />architecture.</h2>
+    <p>Start with a project that already passes every rule, then try to break one.</p>
+    <div class="actions">
+      <button class="copy" type="button" data-copy="npx @bull/cli create my-app">
+        npx @bull/cli create my-app <span data-copied>Copy</span>
+      </button>
+      <a class="button primary" href={`${base}/docs/introduction/`}>Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap row">
+    <span>Bull · MIT license</span>
+    <nav aria-label="Footer">
+      <a href={`${base}/docs/getting-started/`}>Getting started</a>
+      <a href={`${base}/docs/run-locally/`}>Run locally</a>
+      <a href={`${base}/docs/rules/`}>Rules</a>
+      {repoUrl && <a href={repoUrl}>GitHub</a>}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .closing {
+    background: var(--albero);
+    color: #241634;
+    text-align: center;
+  }
+
+  .inner {
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+  }
+
+  h2 {
+    font-size: clamp(56px, 9vw, 120px);
+  }
+
+  p {
+    margin: 0;
+    font-size: 19px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .actions .button.primary {
+    background: #241634;
+    border-color: #241634;
+    color: #fcfbff;
+  }
+
+  .footer {
+    padding: 28px 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .row nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+</style>
