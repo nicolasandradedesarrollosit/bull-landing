@@ -15,7 +15,7 @@ const lines: Line[] = [
   { t: "msg", s: "  The View imports CartRepository directly from the Model." },
   { t: "blank", s: "" },
   { t: "code", s: '  3 │ import { CartRepository } from "../model/cart.repository";' },
-  { t: "caret", s: "    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" },
+  { t: "caret", s: "    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" },
   { t: "blank", s: "" },
   { t: "text", s: "  The View only knows its ViewModel. If it talks to the Model" },
   { t: "text", s: "  directly, presentation logic gets tied to the UI." },
@@ -145,7 +145,6 @@ const screen = lines
       0 0 0 1px var(--line-strong),
       0 0 80px -20px rgba(139, 114, 255, 0.35);
     overflow: hidden;
-    transform: rotate(-1.2deg);
     container-type: inline-size;
   }
 
@@ -280,9 +279,6 @@ const screen = lines
   @media (max-width: 900px) {
     .stage {
       grid-template-columns: minmax(0, 1fr);
-    }
-    .terminal {
-      transform: none;
     }
   }
 
