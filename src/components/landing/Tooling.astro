@@ -117,6 +117,11 @@ const shipping = [
     border-bottom: 1px solid var(--line);
   }
 
+  /* Side padding of the rows; the group titles and the chips line up with it. */
+  .tooling {
+    --row-x: var(--space-5);
+  }
+
   .group + .group {
     margin-top: var(--space-6);
   }
@@ -127,6 +132,7 @@ const shipping = [
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-faint);
+    padding-inline: var(--row-x);
   }
 
   .commands {
@@ -148,8 +154,7 @@ const shipping = [
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) auto;
     gap: var(--space-5);
     align-items: center;
-    padding: var(--space-4) var(--space-3);
-    margin-inline: calc(-1 * var(--space-3));
+    padding: var(--space-5) var(--row-x);
     border-radius: 12px;
     text-decoration: none;
     transition: background-color 0.15s ease;
@@ -197,7 +202,7 @@ const shipping = [
     flex-wrap: wrap;
     gap: var(--space-2);
     margin: var(--space-7) 0 0;
-    padding: 0;
+    padding: 0 var(--row-x);
     list-style: none;
   }
 
@@ -216,6 +221,9 @@ const shipping = [
   }
 
   @media (max-width: 760px) {
+    .tooling {
+      --row-x: var(--space-4);
+    }
     .commands a {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-2);
