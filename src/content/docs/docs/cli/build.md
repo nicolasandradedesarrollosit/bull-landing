@@ -6,7 +6,7 @@ sidebar:
 ---
 
 ```bash
-bull build [root] [--out-dir <dir>]
+bull build [root] [--out-dir <dir>] [--mode <mode>] [--config <file>]
 ```
 
 1. Loads `bull.config.ts`.
@@ -16,7 +16,7 @@ bull build [root] [--out-dir <dir>]
 4. Otherwise runs `vite build` with React and your `vite` options.
 
 ```
-  ♉ bull v0.2.0  · build
+  ♉ bull v0.3.0  · build
 
   ✓ MVVM architecture ok · 8 files (model 2 · viewmodel 1 · view 4) · 40ms
 
@@ -32,6 +32,8 @@ them to errors in [bull.config.ts](../../configuration/) if you want them to.
 | Option | Meaning |
 |---|---|
 | `--out-dir <dir>` | Output folder. Defaults to `dist`. |
+| `--mode <mode>` | Vite mode, for `.env.<mode>` files. Defaults to `production`. |
+| `--config <file>` | Use this file instead of `bull.config.ts`. |
 
 Using Vite directly? Add `bullPlugin()` from `@bull/cli` to your `vite.config.ts`: it runs the
 same check in `buildStart` and fails the build on errors.

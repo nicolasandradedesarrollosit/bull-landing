@@ -3,9 +3,12 @@ title: Introduction
 description: What Bull is, what it enforces and why.
 ---
 
-Bull is a React bundler and CLI in the spirit of Vite and Next, with one difference: the
-**Model–View–ViewModel** architecture is part of the compiler. If the structure is wrong or a layer
-talks to the wrong neighbor, `bull build` stops and explains what to change.
+Bull is an opinionated React framework with a CLI in the spirit of Vite and Next, and one
+difference: the **Model–View–ViewModel** architecture is part of the compiler. If the structure is
+wrong or a layer talks to the wrong neighbor, `bull build` stops and explains what to change.
+
+Bull is not a bundler. Vite does the bundling; Bull checks the architecture before Vite runs and
+gives you the runtime that makes MVVM comfortable in React.
 
 ## The problem it solves
 
@@ -46,12 +49,25 @@ of why it matters, concrete steps to fix it and, for some, an automatic fix.
 | `bull check` | Only the check, with `--format json` for CI. |
 | `@bull/eslint-plugin` | The same rules, underlined in your editor. |
 
+## What it is built on
+
+- **Vite, the bundler.** The dev server, hot reload and the production build are Vite's. Bull
+  analyzes the project first and adds the dev overlay as a Vite plugin. Any Vite option goes in the
+  `vite` key of [bull.config.ts](../configuration/).
+- **React, the View.** Views are plain React function components. `useBinding` subscribes them to a
+  ViewModel through `useSyncExternalStore`, so they re-render only when what they read changes.
+- **Knockout, the idea.** Knockout.js brought MVVM to the browser with observables
+  (`ko.observable`), computeds (`ko.computed`) and declarative bindings. Bull's `state`,
+  `computed` and `command` are the same idea, typed and testable as plain classes, without bindings
+  in the HTML: React is the binding layer.
+
 ## What is in the box
 
 - `@bull/runtime`: signals, the `ViewModel` base class, commands, a DI container and React bindings.
 - `@bull/core`: the analyzer and the rule catalog.
-- `@bull/cli`: `dev`, `build`, `preview`, `check`, `explain`, `create`, plus tooling:
-  `generate`, `fix`, `graph`, `doctor` and `info`.
+- `@bull/cli`: `dev`, `build`, `preview`, `check`, `explain`, `create` and `init`, plus tooling:
+  `generate`, `fix`, `graph`, `doctor`, `info` and `completion`.
+- `@bull/create`: `npm create @bull`, the same `create` as its own package.
 - `@bull/eslint-plugin`: the file-level rules for your editor.
 
 Next: [create your first project](../getting-started/).

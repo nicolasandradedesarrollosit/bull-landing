@@ -6,7 +6,7 @@ sidebar:
 ---
 
 ```bash
-bull [root] [--port <port>] [--open] [--host [host]]
+bull [root] [--port <port>] [--open] [--host [host]] [--mode <mode>] [--config <file>]
 bull dev [root]
 ```
 
@@ -30,6 +30,8 @@ the code respects MVVM. `false` turns it off.
 | `--port <port>` | Port (also `dev.port` in the config). |
 | `--open` | Open the browser (also `dev.open`). |
 | `--host [host]` | Expose the server on the network. |
+| `--mode <mode>` | Vite mode, for `.env.<mode>` files. Defaults to `development`. |
+| `--config <file>` | Use this file instead of `bull.config.ts`. |
 
 Extra Vite options (proxy, aliases, plugins) go in the `vite` key of
 [bull.config.ts](../../configuration/).

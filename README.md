@@ -4,7 +4,7 @@
 
 <h1 align="center">Bull docs</h1>
 
-<p align="center">The landing page and documentation of <strong>Bull</strong>, the React bundler that refuses to build unless you respect MVVM.<br>
+<p align="center">The landing page and documentation of <strong>Bull</strong>, the opinionated React framework that refuses to build unless you respect MVVM.<br>
 Built with <a href="https://astro.build">Astro</a> and <a href="https://starlight.astro.build">Starlight</a>, deployed to GitHub Pages.</p>
 
 ## What is here
