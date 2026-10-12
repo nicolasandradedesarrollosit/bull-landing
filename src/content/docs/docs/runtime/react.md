@@ -10,7 +10,9 @@ import { createBullApp, useBinding, useChildViewModel, useViewModel } from "@bul
 ```
 
 `@bull/runtime/react` is the only part of the runtime a View may import
-([MVVM205](../../rules/mvvm205/)).
+([MVVM205](../../rules/mvvm205/)). It is also the only place in Bull that uses React's own state hooks:
+your Views use these instead. The full table of which React hooks a View may use is in
+[Reactivity, from the inside](../../concepts/reactivity/#react-hooks-in-bull).
 
 ## `createBullApp(options)`
 
@@ -37,6 +39,12 @@ const vm = useViewModel(TodoListViewModel);
 
 Never create a ViewModel with `new` inside a View ([MVVM204](../../rules/mvvm204/)).
 
+Destructuring works, and the rules follow destructured members:
+
+```tsx
+const { todos, add } = useViewModel(TodoListViewModel);
+```
+
 ## `useBinding(readable)`
 
 Reads a `State`, `Computed` or read-only view and re-renders when it changes.
@@ -45,6 +53,18 @@ Reads a `State`, `Computed` or read-only view and re-renders when it changes.
 const todos = useBinding(vm.todos);
 const saving = useBinding(vm.save.isRunning);
 ```
+
+It is React's [`useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore)
+subscribed to the signal, which gives you:
+
+- **Granular renders.** Only the components that bind a value re-render when it changes, not their
+  parents or siblings. There is no need for `memo` or for splitting contexts.
+- **No render for the same value.** If the new value is `Object.is`-equal to the last one, for
+  example a computed that recalculates to the same result, the component does not re-render.
+- **Safe concurrent rendering**, StrictMode included.
+
+Bind at the top of the component, like any hook. Reading `vm.todos.value` instead gives you the
+value once and never updates ([MVVM206](../../rules/mvvm206/)).
 
 ## `useChildViewModel(vm)`
 

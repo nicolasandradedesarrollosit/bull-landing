@@ -27,7 +27,8 @@ const visible = useBinding(vm.visible);
 ```
 
 Reading `vm.filter.value` directly works once but does not subscribe: Bull warns about it
-([MVVM206](../../rules/mvvm206/)).
+([MVVM206](../../rules/mvvm206/)). How a binding knows when to re-render is explained in
+[Reactivity, from the inside](../reactivity/).
 
 ## Acting: commands
 

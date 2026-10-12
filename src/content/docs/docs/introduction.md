@@ -61,6 +61,9 @@ of why it matters, concrete steps to fix it and, for some, an automatic fix.
   `computed` and `command` are the same idea, typed and testable as plain classes, without bindings
   in the HTML: React is the binding layer.
 
+The reactivity is the core of Bull: state lives in signals inside the ViewModel, and React only
+renders what they say. [Reactivity, from the inside](../concepts/reactivity/) explains it end to end.
+
 ## What is in the box
 
 - `@bull/runtime`: signals, the `ViewModel` base class, commands, a DI container and React bindings.
@@ -70,4 +73,5 @@ of why it matters, concrete steps to fix it and, for some, an automatic fix.
 - `@bull/create`: `npm create @bull`, the same `create` as its own package.
 - `@bull/eslint-plugin`: the file-level rules for your editor.
 
-Next: [create your first project](../getting-started/).
+Next: [create your first project](../getting-started/), then read
+[how the reactivity works](../concepts/reactivity/).

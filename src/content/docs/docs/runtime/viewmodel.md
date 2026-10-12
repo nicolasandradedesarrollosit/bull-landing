@@ -41,6 +41,9 @@ export class CheckoutViewModel extends ViewModel {
 | `this.command(fn, options?)` | `Command<A, R>` | Every action the View can trigger. |
 | `this.effect(fn)` | `void` | Reactions that run while the View is mounted. |
 
+These are the primitives from [the reactivity model](../../concepts/reactivity/), created on the
+ViewModel. Effects are the exception: they are tied to its lifecycle.
+
 ## Lifecycle
 
 `useViewModel` creates the ViewModel once per component and **activates** it on mount:
@@ -51,6 +54,28 @@ export class CheckoutViewModel extends ViewModel {
 On unmount the ViewModel is **deactivated**: effects stop and cleanups run. Activation is
 reference-counted, so React StrictMode's double mount is safe. `vm.isActive` tells whether it is
 currently active.
+
+An effect that keeps something in sync while the screen is open:
+
+```ts
+export class SearchViewModel extends ViewModel {
+  readonly #query = this.state("");
+  readonly #results = this.state<Result[]>([]);
+  readonly query = this.#query.readonly;
+  readonly results = this.#results.readonly;
+  readonly type = this.command((text: string) => this.#query.set(text));
+
+  constructor(private readonly api: SearchService) {
+    super();
+    // Runs on mount and on every change to the query; the cleanup cancels the previous request.
+    this.effect(() => {
+      const controller = new AbortController();
+      this.api.search(this.#query.value, controller.signal).then((r) => this.#results.set(r));
+      return () => controller.abort();
+    });
+  }
+}
+```
 
 ## `Command<A, R>`
 
@@ -68,6 +93,43 @@ readonly save = this.command(async () => this.repo.save(this.#draft.value));
 
 An async command cannot run twice at the same time: `execute` returns `undefined` while
 `isRunning` is `true`, which prevents double submits.
+
+Errors never escape a command. A synchronous throw or a rejected promise ends up in `error` (and in
+the console), `execute` returns `undefined`, and the next execution clears it.
+
+### Why commands
+
+The View never writes state ([MVVM202](../../rules/mvvm202/)), so commands are how it asks for
+something. Each one is a named action in the ViewModel, so every change has one place where it
+happens, is validated and is tested. Loading, errors and "can I click this?" come with it as reactive
+values, so the View holds no logic of its own:
+
+```tsx
+const canSave = useBinding(vm.save.canExecute);
+const saving = useBinding(vm.save.isRunning);
+
+<button onClick={vm.save.execute} disabled={!canSave}>
+  {saving ? "Saving…" : "Save"}
+</button>
+```
+
+A command's body is not batched automatically: if it writes several states that belong together,
+wrap the writes in [`batch`](../reactivity/#batchfn--the-value-fn-returns).
+
+## Destructuring in the View
+
+Every public member is a field (a read-only state, a computed or a command), and `execute` is bound
+to its command, so a View can destructure the ViewModel:
+
+```tsx
+const { total, pay } = useViewModel(CheckoutViewModel);
+const amount = useBinding(total);
+
+<button onClick={pay.execute}>Pay {amount}</button>
+```
+
+The rules follow destructured members, aliases and nested patterns: `total.value` still warns
+([MVVM206](../../rules/mvvm206/)).
 
 ## The rules that apply
 
