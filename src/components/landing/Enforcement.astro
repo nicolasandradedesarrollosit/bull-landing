@@ -52,7 +52,7 @@ const places = [
   .grid {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: clamp(28px, 4vw, 56px);
+    gap: clamp(var(--space-6), 4vw, var(--space-8));
     align-items: start;
   }
 
@@ -68,7 +68,7 @@ const places = [
   }
 
   figcaption {
-    margin-top: 12px;
+    margin-top: var(--space-3);
     font-size: 14px;
     color: var(--ink-soft);
   }
@@ -78,7 +78,7 @@ const places = [
   }
 
   .places div {
-    padding: 22px 0;
+    padding-block: var(--space-5);
     border-top: 2px solid var(--ink);
   }
 
@@ -92,7 +92,7 @@ const places = [
   }
 
   dd {
-    margin: 6px 0 0;
+    margin: var(--space-2) 0 0;
     color: var(--ink-soft);
   }
 

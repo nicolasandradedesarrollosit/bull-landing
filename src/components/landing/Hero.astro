@@ -100,7 +100,7 @@ const screen = lines
   .hero {
     background: var(--albero);
     color: #241634;
-    padding-bottom: clamp(56px, 8vw, 104px);
+    padding-bottom: clamp(var(--space-8), 8vw, var(--space-9));
     position: relative;
     overflow: hidden;
   }
@@ -119,14 +119,13 @@ const screen = lines
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 22px;
-    padding-bottom: 22px;
+    padding-block: var(--space-5);
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-3);
     text-decoration: none;
     font: 800 30px/1 var(--display);
     letter-spacing: 0.02em;
@@ -134,7 +133,7 @@ const screen = lines
 
   .links {
     display: flex;
-    gap: clamp(14px, 3vw, 32px);
+    gap: clamp(var(--space-4), 3vw, var(--space-6));
     font-weight: 600;
   }
 
@@ -151,9 +150,9 @@ const screen = lines
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 6fr) minmax(0, 7fr);
-    gap: clamp(32px, 5vw, 64px);
+    gap: clamp(var(--space-6), 5vw, var(--space-8));
     align-items: center;
-    padding-top: clamp(32px, 6vw, 88px);
+    padding-top: clamp(var(--space-6), 6vw, var(--space-9));
   }
 
   .pitch .eyebrow {
@@ -168,13 +167,13 @@ const screen = lines
   .lede {
     font-size: 19px;
     max-width: 42ch;
-    margin: 28px 0 32px;
+    margin: var(--space-5) 0 var(--space-6);
   }
 
   .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: var(--space-3);
     align-items: center;
   }
 
@@ -196,8 +195,8 @@ const screen = lines
   .bar {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
     background: #241634;
   }
 
@@ -214,7 +213,7 @@ const screen = lines
     border: 1px solid #4b3a63;
     color: #b3a8c6;
     border-radius: 999px;
-    padding: 3px 12px;
+    padding: var(--space-1) var(--space-3);
     font: 600 12px var(--body);
     cursor: pointer;
   }
@@ -226,7 +225,7 @@ const screen = lines
   .screen {
     margin: 0;
     white-space: normal; /* the lines are blocks: ignore the whitespace between them */
-    padding: 20px 22px 26px;
+    padding: var(--space-5);
     font-size: clamp(10.5px, 1.05vw, 13px);
     line-height: 1.6;
     color: #d9d2e6;

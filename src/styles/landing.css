@@ -16,6 +16,18 @@
   --body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
   --mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
+  /* Spacing scale (4/8 based). Every margin, padding and gap on the landing uses it. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --section-y: clamp(var(--space-8), 8vw, var(--space-9));
+
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1180px;
   color-scheme: light;
@@ -68,7 +80,8 @@ kbd {
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  /* Inline only: components add .wrap next to their own block padding (.nav, .stage). */
+  padding-inline: var(--gutter);
 }
 
 /* Poster headings: condensed, uppercase, tight. Used only for h1/h2. */
@@ -86,26 +99,27 @@ kbd {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  margin: 0 0 18px;
+  margin: 0 0 var(--space-5);
 }
 
 section {
-  padding: clamp(64px, 9vw, 120px) 0;
+  padding-block: var(--section-y);
 }
 
 .section-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px 48px;
+  gap: var(--space-5) var(--space-7);
   align-items: end;
-  margin-bottom: 48px;
+  margin-bottom: var(--space-7);
 }
 
 .section-head h2 {
   font-size: clamp(48px, 7vw, 92px);
 }
 
-.section-head p {
+/* Only the description: a descendant `p` would also zero the eyebrow's margin. */
+.section-head > p {
   margin: 0;
   color: var(--ink-soft);
   max-width: 46ch;
@@ -114,8 +128,8 @@ section {
 .button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
   border-radius: 999px;
   font-weight: 700;
   text-decoration: none;
@@ -146,8 +160,8 @@ section {
 .copy {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   border-radius: 12px;
   border: 1.5px dashed currentColor;
   background: transparent;

@@ -45,7 +45,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .inner {
     display: grid;
     justify-items: center;
-    gap: 18px;
+    gap: var(--space-4);
   }
 
   h2 {
@@ -61,8 +61,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px;
-    margin-top: 12px;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
   }
 
   .actions .button.primary {
@@ -72,7 +72,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   }
 
   .footer {
-    padding: 28px 0;
+    padding-block: var(--space-6);
     font-size: 14px;
     color: var(--ink-soft);
   }
@@ -81,12 +81,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 12px;
+    gap: var(--space-3);
   }
 
   .row nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: var(--space-5);
   }
 </style>

@@ -128,7 +128,7 @@ const layers = [
   }
 
   .diagram {
-    margin: 0 0 48px;
+    margin: 0 0 var(--space-7);
   }
 
   svg {
@@ -193,7 +193,7 @@ const layers = [
   .cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: var(--space-5);
   }
 
   .card {
@@ -201,7 +201,7 @@ const layers = [
     border: 1px solid var(--line);
     border-top: 6px solid var(--accent);
     border-radius: 16px;
-    padding: 24px;
+    padding: var(--space-5);
   }
 
   .card h3 {
@@ -211,17 +211,17 @@ const layers = [
   }
 
   .file {
-    margin: 8px 0 16px;
+    margin: var(--space-2) 0 var(--space-4);
     font: 500 13px var(--mono);
     color: var(--ink-soft);
   }
 
   .does {
-    margin: 0 0 18px;
+    margin: 0 0 var(--space-4);
   }
 
   .never-label {
-    margin: 0 0 6px;
+    margin: 0 0 var(--space-2);
     font: 700 12px var(--mono);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -235,7 +235,7 @@ const layers = [
   }
 
   li {
-    padding: 6px 0;
+    padding-block: var(--space-2);
     border-top: 1px solid var(--line);
     color: var(--ink-soft);
   }
@@ -246,7 +246,7 @@ const layers = [
   }
 
   .more {
-    margin: 28px 0 0;
+    margin: var(--space-6) 0 0;
     font-weight: 700;
   }
 
