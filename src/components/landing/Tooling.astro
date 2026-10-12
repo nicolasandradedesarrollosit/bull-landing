@@ -1,32 +1,70 @@
 ---
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const commands = [
+// In the order you meet them: start a project, grow it, fix it, look at it.
+const groups = [
   {
-    cmd: "bull g feature cart",
-    doc: "generate",
-    what: "Writes a repository, a ViewModel that receives it, its test and a bound View, and registers them in main.tsx.",
+    title: "Start",
+    commands: [
+      {
+        cmd: "npm create @bull@latest",
+        doc: "create",
+        what: "Asks for a name, installs with the package manager you ran it with and initializes git. The project passes every rule from the first commit.",
+      },
+      {
+        cmd: "bull init",
+        doc: "init",
+        what: "Adds Bull to an existing Vite and React app: the config, the layer folders, the scripts and the dependencies. It never overwrites a file.",
+      },
+    ],
   },
   {
-    cmd: "bull fix --dry-run",
-    doc: "fix",
-    what: "Shows a diff for the fixes with one right answer: renames, private state behind read-only views, type re-exports.",
+    title: "Grow",
+    commands: [
+      {
+        cmd: "bull g feature cart",
+        doc: "generate",
+        what: "Writes a repository, a ViewModel that receives it, its test and a bound View, and registers them in main.tsx.",
+      },
+      {
+        cmd: "bull fix --dry-run",
+        doc: "fix",
+        what: "Shows a diff for the fixes with one right answer: renames, private state behind read-only views, type re-exports.",
+      },
+    ],
   },
   {
-    cmd: "bull graph --format html",
-    doc: "graph",
-    what: "Draws every import between layers. Edges that break the direction are red; Mermaid and DOT too.",
+    title: "Inspect",
+    commands: [
+      {
+        cmd: "bull graph --format html",
+        doc: "graph",
+        what: "Draws every import between layers. Edges that break the direction are red; Mermaid and DOT too.",
+      },
+      {
+        cmd: "bull doctor",
+        doc: "doctor",
+        what: "Checks Node, React, a single copy of React, the config, tsconfig and ESLint, with a hint for each problem.",
+      },
+      {
+        cmd: "bull info",
+        doc: "info",
+        what: "Lists each ViewModel’s public state, computeds and commands, what it injects and which Views bind it.",
+      },
+      {
+        cmd: "bull completion powershell",
+        doc: "completion",
+        what: "Tab-completes every command and flag in bash, zsh, fish and PowerShell.",
+      },
+    ],
   },
-  {
-    cmd: "bull doctor",
-    doc: "doctor",
-    what: "Checks Node, React, a single copy of React, the config, tsconfig and ESLint, with a hint for each problem.",
-  },
-  {
-    cmd: "bull info",
-    doc: "info",
-    what: "Lists each ViewModel’s public state, computeds and commands, what it injects and which Views bind it.",
-  },
+];
+
+const shipping = [
+  "Typed ESM packages on npm, published with provenance",
+  "Versioned with Changesets, one version for every package",
+  "CI on Linux and Windows, Node 20 and 22",
+  "Formatted and linted with Biome",
 ];
 ---
 
@@ -38,42 +76,57 @@ const commands = [
         <h2 class="poster">Strict, not<br />stranded.</h2>
       </div>
       <p>
-        A strict architecture needs help to follow. The CLI scaffolds code in the right place, fixes
-        what it safely can and shows you the shape of your app.
+        A strict architecture needs help to follow. The CLI starts projects that already pass, scaffolds
+        code in the right place, fixes what it safely can and shows you the shape of your app.
       </p>
     </div>
 
-    <ul class="commands">
-      {
-        commands.map((c) => (
-          <li>
-            <a href={`${base}/docs/cli/${c.doc}/`}>
-              <code>
-                <span class="prompt">$</span> {c.cmd}
-              </code>
-              <span class="what">{c.what}</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-        ))
-      }
+    {
+      groups.map((group) => (
+        <div class="group">
+          <h3>{group.title}</h3>
+          <ul class="commands">
+            {group.commands.map((c) => (
+              <li>
+                <a href={`${base}/docs/cli/${c.doc}/`}>
+                  <code>
+                    <span class="prompt">$</span> {c.cmd}
+                  </code>
+                  <span class="what">{c.what}</span>
+                  <span class="arrow" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+
+    <ul class="shipping" aria-label="How Bull itself is built and released">
+      {shipping.map((item) => <li>{item}</li>)}
     </ul>
   </div>
 </section>
 
 <style>
   .tooling {
-    background: var(--ink);
-    color: var(--paper);
-    --ink-soft: rgba(252, 251, 255, 0.68);
-    --line: rgba(252, 251, 255, 0.16);
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .tooling {
-      background: #0d0815;
-      color: #f3eefa;
-    }
+  .group + .group {
+    margin-top: var(--space-6);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-2);
+    font: 600 12px/1 var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
   }
 
   .commands {
@@ -95,23 +148,31 @@ const commands = [
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) auto;
     gap: var(--space-5);
     align-items: center;
-    padding: var(--space-5) var(--space-1);
+    padding: var(--space-4) var(--space-3);
+    margin-inline: calc(-1 * var(--space-3));
+    border-radius: 12px;
     text-decoration: none;
-    transition: background 0.15s ease;
+    transition: background-color 0.15s ease;
   }
 
   .commands a:hover {
-    background: rgba(252, 251, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   code {
-    font-size: clamp(15px, 1.6vw, 19px);
+    font-size: clamp(15px, 1.6vw, 18px);
     font-weight: 600;
     color: var(--albero);
+    overflow-wrap: anywhere;
+    transition: color 0.15s ease;
+  }
+
+  .commands a:hover code {
+    color: var(--albero-soft);
   }
 
   .prompt {
-    color: rgba(252, 251, 255, 0.4);
+    color: var(--ink-faint);
   }
 
   .what {
@@ -120,11 +181,38 @@ const commands = [
 
   .arrow {
     font-size: 22px;
-    transition: transform 0.15s ease;
+    color: var(--ink-faint);
+    transition:
+      transform 0.15s ease,
+      color 0.15s ease;
   }
 
   .commands a:hover .arrow {
+    color: var(--ink);
     transform: translateX(4px);
+  }
+
+  .shipping {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-7) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .shipping li {
+    padding: var(--space-2) var(--space-4);
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .shipping li::before {
+    content: "✓ ";
+    color: var(--view);
   }
 
   @media (max-width: 760px) {

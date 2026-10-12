@@ -1,39 +1,40 @@
-/* Bull theme for the Starlight docs: the bull's colors and the poster display face. */
+/* Bull theme for the Starlight docs: dark only, the bull's colors and the poster display face. */
 :root {
   --sl-font: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
   --sl-font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
   --bull-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
-}
 
-/* Dark mode (Starlight's default). */
-:root {
-  --sl-color-accent-low: #2a1d52;
+  --sl-color-accent-low: #221846;
   --sl-color-accent: #8b72ff;
   --sl-color-accent-high: #d9d0ff;
   --sl-color-white: #ffffff;
-  --sl-color-gray-1: #ece8f6;
-  --sl-color-gray-2: #c6bfd8;
-  --sl-color-gray-3: #9a91b0;
-  --sl-color-gray-4: #635a7a;
-  --sl-color-gray-5: #3e3554;
-  --sl-color-gray-6: #2b2340;
-  --sl-color-black: #1a1228;
+  --sl-color-gray-1: #ede8f6;
+  --sl-color-gray-2: #c4bcd6;
+  --sl-color-gray-3: #9890ad;
+  --sl-color-gray-4: #615877;
+  --sl-color-gray-5: #2c2440;
+  --sl-color-gray-6: #150f20;
+  --sl-color-black: #09060f;
+
+  /* One surface for the page, the header and the sidebar: the separation comes from hairlines. */
+  --sl-color-bg: #09060f;
+  --sl-color-bg-nav: rgba(9, 6, 15, 0.86);
+  --sl-color-bg-sidebar: #09060f;
+  --sl-color-hairline: rgba(255, 255, 255, 0.07);
+  --sl-color-hairline-light: rgba(255, 255, 255, 0.1);
+  --sl-color-hairline-shade: rgba(255, 255, 255, 0.07);
+  --sl-color-bg-inline-code: #1a1328;
+
+  color-scheme: dark;
 }
 
-:root[data-theme="light"] {
-  --sl-color-accent-low: #e3dcff;
-  --sl-color-accent: #5a3df0;
-  --sl-color-accent-high: #2a1880;
-  --sl-color-white: #241634;
-  --sl-color-gray-1: #33264a;
-  --sl-color-gray-2: #4a3d61;
-  --sl-color-gray-3: #6e6385;
-  --sl-color-gray-4: #9d94b1;
-  --sl-color-gray-5: #d3cde0;
-  --sl-color-gray-6: #eeeaf5;
-  --sl-color-gray-7: #f7f5fb;
-  --sl-color-black: #fcfbff;
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.page > .header {
+  backdrop-filter: blur(12px);
 }
+
+/* ─── Headings ───────────────────────────────────────────────────────────── */
 
 .sl-markdown-content h1,
 h1#_top {
@@ -43,15 +44,121 @@ h1#_top {
   text-transform: uppercase;
 }
 
-.site-title {
-  font-family: var(--bull-display);
-  font-weight: 800;
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
+/* ─── Sidebar: a soft fill on hover, an accent bar on the current page ──── */
+
+.sidebar-content a {
+  border-radius: 8px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
-/* Rule badges used in the rule reference. */
+.sidebar-content a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--sl-color-white);
+}
+
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover {
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-white);
+  box-shadow: inset 3px 0 0 var(--sl-color-accent);
+  font-weight: 600;
+}
+
+.sidebar-content summary {
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.sidebar-content summary:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Links in the content: color, not underline ────────────────────────── */
+
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--sl-color-accent-high);
+  text-decoration: none;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(139, 114, 255, 0.35);
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.sl-markdown-content a:not(:where(.not-content *)):hover {
+  color: var(--sl-color-white);
+  background: rgba(139, 114, 255, 0.16);
+  box-shadow: 0 0 0 3px rgba(139, 114, 255, 0.16);
+}
+
+.pagination-links a {
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.pagination-links a:hover {
+  border-color: var(--sl-color-accent);
+  background: rgba(139, 114, 255, 0.08);
+}
+
+/* ─── Content ────────────────────────────────────────────────────────────── */
+
 .sl-markdown-content blockquote {
   border-inline-start-color: var(--sl-color-accent);
+}
+
+.sl-markdown-content code:not(:where(pre code)) {
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+}
+
+/* Tables scroll inside themselves on narrow screens instead of widening the page. */
+.sl-markdown-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ─── Page changes ───────────────────────────────────────────────────────── */
+
+/* The client router swaps pages with a view transition. The header and the sidebar stay still, and
+   only the article fades, briefly. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+.main-frame {
+  view-transition-name: bull-content;
+}
+
+::view-transition-old(bull-content) {
+  animation: 90ms ease-out both bull-fade-out;
+}
+
+::view-transition-new(bull-content) {
+  animation: 160ms ease-in both bull-fade-in;
+}
+
+@keyframes bull-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes bull-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(bull-content),
+  ::view-transition-new(bull-content) {
+    animation: none;
+  }
 }

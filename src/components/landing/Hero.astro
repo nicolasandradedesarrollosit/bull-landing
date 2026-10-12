@@ -1,19 +1,14 @@
 ---
-import BullMark from "./BullMark.astro";
-
-interface Props {
-  repoUrl?: string;
-}
-
-const { repoUrl } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const install = "npm create @bull@latest my-app";
 
 // A real `bull build` run, replayed line by line. `t` is the line's role (for color).
 type Line = { t: "cmd" | "dim" | "head" | "msg" | "code" | "caret" | "text" | "fix" | "fail" | "blank"; s: string };
+const command = "npx bull build";
 const lines: Line[] = [
-  { t: "cmd", s: "npx bull build" },
+  { t: "cmd", s: command },
   { t: "blank", s: "" },
-  { t: "dim", s: "  ♉︎ bull v0.2.0  · build" },
+  { t: "dim", s: "  ♉︎ bull v0.3.0  · build" },
   { t: "blank", s: "" },
   { t: "head", s: "── VIEW IMPORTS MODEL ── src/view/cart.view.tsx:3:1  MVVM100" },
   { t: "blank", s: "" },
@@ -31,6 +26,8 @@ const lines: Line[] = [
   { t: "blank", s: "" },
   { t: "fail", s: "  ✗ Build cancelled: 1 MVVM architecture violation." },
 ];
+// The font size is fitted so the widest line fills the terminal: it never scrolls sideways.
+const columns = Math.max(...lines.map((line) => line.s.length + (line.t === "cmd" ? 2 : 0))) + 1;
 
 const esc = (text: string) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 // Built as one string: whitespace between the line spans would render inside <pre>.
@@ -46,32 +43,19 @@ const screen = lines
 ---
 
 <header class="hero">
-  <nav class="wrap nav" aria-label="Main">
-    <a class="brand" href={`${base}/`}>
-      <BullMark size={34} />
-      <span>bull</span>
-    </a>
-    <div class="links">
-      <a href={`${base}/docs/introduction/`}>Docs</a>
-      <a href={`${base}/docs/cli/overview/`}>CLI</a>
-      <a href={`${base}/docs/rules/`}>Rules</a>
-      {repoUrl && <a href={repoUrl}>GitHub</a>}
-    </div>
-  </nav>
-
   <div class="wrap stage">
     <div class="pitch">
-      <p class="eyebrow">React bundler · MVVM enforced</p>
-      <h1 class="poster">It won’t<br />build.</h1>
+      <p class="eyebrow">React framework · MVVM enforced</p>
+      <h1 class="poster">It won’t<br /><span class="accent">build.</span></h1>
       <p class="lede">
-        Bull is a React bundler that enforces Model–View–ViewModel. Import the Model from a View,
-        keep state in a component or touch the DOM from a ViewModel, and the build stops with the
-        reason and the fix.
+        Bull is an opinionated React framework that enforces Model–View–ViewModel. Import the Model
+        from a View, keep state in a component or touch the DOM from a ViewModel, and the build stops
+        with the reason and the fix. Vite still does the bundling.
       </p>
       <div class="actions">
         <a class="button primary" href={`${base}/docs/getting-started/`}>Get started</a>
-        <button class="copy" type="button" data-copy="npx @bull/cli create my-app">
-          npx @bull/cli create my-app <span data-copied>Copy</span>
+        <button class="copy" type="button" data-copy={install}>
+          {install} <span data-copied>Copy</span>
         </button>
       </div>
     </div>
@@ -81,7 +65,7 @@ const screen = lines
         <span></span><span></span><span></span>
         <button type="button" class="replay" aria-label="Replay the build">Replay</button>
       </div>
-      <pre class="screen" data-playing><code set:html={screen} /></pre>
+      <pre class="screen" style={`--cols:${columns};--chars:${command.length}`} data-playing><code set:html={screen} /></pre>
     </figure>
   </div>
 </header>
@@ -98,11 +82,14 @@ const screen = lines
 
 <style>
   .hero {
-    background: var(--albero);
-    color: #241634;
-    padding-bottom: clamp(var(--space-8), 8vw, var(--space-9));
     position: relative;
     overflow: hidden;
+    padding-bottom: clamp(var(--space-8), 8vw, var(--space-9));
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(55% 60% at 85% 10%, rgba(139, 114, 255, 0.2), transparent 70%),
+      radial-gradient(45% 55% at 0% 100%, rgba(231, 178, 74, 0.13), transparent 70%),
+      var(--paper);
   }
 
   /* Raked sand: faint arcs, like the lines a rake leaves in the bullring. */
@@ -110,40 +97,9 @@ const screen = lines
     content: "";
     position: absolute;
     inset: 0;
-    background: repeating-radial-gradient(circle at 15% 120%, transparent 0 22px, rgba(36, 22, 52, 0.05) 22px 23px);
+    background: repeating-radial-gradient(circle at 15% 120%, transparent 0 22px, rgba(231, 178, 74, 0.05) 22px 23px);
+    mask-image: linear-gradient(to top, #000, transparent 75%);
     pointer-events: none;
-  }
-
-  .nav {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: var(--space-5);
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    text-decoration: none;
-    font: 800 30px/1 var(--display);
-    letter-spacing: 0.02em;
-  }
-
-  .links {
-    display: flex;
-    gap: clamp(var(--space-4), 3vw, var(--space-6));
-    font-weight: 600;
-  }
-
-  .links a {
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-  }
-
-  .links a:hover {
-    border-bottom-color: currentColor;
   }
 
   .stage {
@@ -152,21 +108,21 @@ const screen = lines
     grid-template-columns: minmax(0, 6fr) minmax(0, 7fr);
     gap: clamp(var(--space-6), 5vw, var(--space-8));
     align-items: center;
-    padding-top: clamp(var(--space-6), 6vw, var(--space-9));
-  }
-
-  .pitch .eyebrow {
-    color: rgba(36, 22, 52, 0.7);
+    padding-top: clamp(var(--space-7), 7vw, var(--space-9));
   }
 
   h1 {
     font-size: clamp(84px, 10.5vw, 156px);
-    color: #241634;
+  }
+
+  h1 .accent {
+    color: var(--albero);
   }
 
   .lede {
     font-size: 19px;
-    max-width: 42ch;
+    max-width: 44ch;
+    color: var(--ink-soft);
     margin: var(--space-5) 0 var(--space-6);
   }
 
@@ -177,19 +133,17 @@ const screen = lines
     align-items: center;
   }
 
-  .actions .button.primary {
-    background: #241634;
-    border-color: #241634;
-    color: #fcfbff;
-  }
-
   .terminal {
     margin: 0;
     background: var(--terminal);
     border-radius: 18px;
-    box-shadow: 0 30px 60px -20px rgba(36, 22, 52, 0.55), 0 0 0 1px rgba(36, 22, 52, 0.4);
+    box-shadow:
+      0 40px 80px -30px rgba(0, 0, 0, 0.8),
+      0 0 0 1px var(--line-strong),
+      0 0 80px -20px rgba(139, 114, 255, 0.35);
     overflow: hidden;
     transform: rotate(-1.2deg);
+    container-type: inline-size;
   }
 
   .bar {
@@ -197,39 +151,48 @@ const screen = lines
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-3) var(--space-4);
-    background: #241634;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid var(--line);
   }
 
   .bar > span {
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #4b3a63;
+    background: rgba(255, 255, 255, 0.14);
   }
 
   .replay {
     margin-left: auto;
     background: none;
-    border: 1px solid #4b3a63;
-    color: #b3a8c6;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-soft);
     border-radius: 999px;
     padding: var(--space-1) var(--space-3);
     font: 600 12px var(--body);
     cursor: pointer;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease,
+      background-color 0.15s ease;
   }
 
   .replay:hover {
     color: #fff;
+    border-color: var(--ink-soft);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .screen {
+    --pad: clamp(14px, 4cqi, 24px);
     margin: 0;
     white-space: normal; /* the lines are blocks: ignore the whitespace between them */
-    padding: var(--space-5);
-    font-size: clamp(10.5px, 1.05vw, 13px);
+    padding: var(--pad);
+    /* JetBrains Mono advances 0.6em per character: fit `--cols` characters in the width. */
+    font-size: clamp(6.5px, calc((100cqi - 2 * var(--pad)) / (var(--cols) * 0.6)), 13px);
     line-height: 1.6;
     color: #d9d2e6;
-    overflow-x: auto;
+    overflow: hidden;
   }
 
   .screen :global(.l) {
@@ -242,7 +205,7 @@ const screen = lines
   }
 
   .screen :global(.dim) {
-    color: #8a7da0;
+    color: var(--ink-faint);
     /* Draw the Taurus glyph from a text symbol font, not the emoji font. */
     font-family: var(--mono), "Segoe UI Symbol", "Noto Sans Symbols 2", "Apple Symbols", monospace;
   }
@@ -258,7 +221,7 @@ const screen = lines
   }
 
   .screen :global(.code) {
-    color: #f3eefa;
+    color: var(--ink);
   }
 
   .screen :global(.caret) {
@@ -266,11 +229,11 @@ const screen = lines
   }
 
   .screen :global(.text) {
-    color: #b3a8c6;
+    color: var(--ink-soft);
   }
 
   .screen :global(.fix) {
-    color: #7ee2a8;
+    color: var(--view);
     font-weight: 700;
   }
 
@@ -293,7 +256,7 @@ const screen = lines
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
-    animation: type 0.9s steps(15) 0.2s both;
+    animation: type 0.9s steps(var(--chars)) 0.2s both;
   }
 
   @keyframes appear {
@@ -307,7 +270,7 @@ const screen = lines
       width: 0;
     }
     to {
-      width: 15ch;
+      width: calc(var(--chars) * 1ch);
     }
   }
 
@@ -321,8 +284,8 @@ const screen = lines
   }
 
   @media (max-width: 520px) {
-    .links a:nth-child(n + 2) {
-      display: none;
+    .copy {
+      font-size: 13px;
     }
   }
 </style>

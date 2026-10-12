@@ -1,16 +1,23 @@
-/* Landing tokens: the bullring (albero sand, plum ink) and the bull's facets (violet, rose). */
+/* Landing tokens: a dark bullring. Albero sand and the bull's facets (violet, rose) are the accents. */
 :root {
   --albero: #e7b24a;
-  --albero-deep: #b9831a;
-  --ink: #241634;
-  --ink-soft: #5b4d70;
-  --violet: #6b4dff;
+  --albero-soft: #f2c76f;
+  --violet: #8b72ff;
+  --violet-soft: #b7a8ff;
   --rose: #f0507c;
+  --view: #4ad48a;
   --horn: #ffd9bf;
-  --paper: #fcfbff;
-  --card: #ffffff;
-  --line: rgba(36, 22, 52, 0.14);
-  --terminal: #1b1228;
+
+  --paper: #09060f; /* page background */
+  --surface: #0e0a16; /* alternate sections */
+  --card: #140e1f;
+  --card-hover: #1a1329;
+  --terminal: #0c0813;
+  --ink: #ede8f6;
+  --ink-soft: #a39ab5;
+  --ink-faint: #6f6684;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
 
   --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
   --body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
@@ -30,19 +37,8 @@
 
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1180px;
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #f3eefa;
-    --ink-soft: #b3a8c6;
-    --paper: #150d20;
-    --card: #1d142b;
-    --line: rgba(243, 238, 250, 0.12);
-    --violet: #8b72ff;
-    color-scheme: dark;
-  }
+  --topbar: 64px;
+  color-scheme: dark;
 }
 
 * {
@@ -51,6 +47,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--topbar);
 }
 
 body {
@@ -59,10 +56,15 @@ body {
   color: var(--ink);
   font: 17px/1.6 var(--body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 a {
   color: inherit;
+}
+
+::selection {
+  background: rgba(139, 114, 255, 0.4);
 }
 
 :focus-visible {
@@ -80,8 +82,25 @@ kbd {
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
-  /* Inline only: components add .wrap next to their own block padding (.nav, .stage). */
+  /* Inline only: components add .wrap next to their own block padding (.stage). */
   padding-inline: var(--gutter);
+}
+
+/* The same navigation as the docs header, pinned to the top. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--topbar);
+  background: rgba(9, 6, 15, 0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar .wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 /* Poster headings: condensed, uppercase, tight. Used only for h1/h2. */
@@ -98,7 +117,7 @@ kbd {
   font: 600 13px/1 var(--mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--albero);
   margin: 0 0 var(--space-5);
 }
 
@@ -133,28 +152,51 @@ section {
   border-radius: 999px;
   font-weight: 700;
   text-decoration: none;
-  border: 2px solid var(--ink);
-  transition: transform 0.15s ease, background 0.15s ease;
+  border: 1.5px solid var(--line-strong);
+  color: var(--ink);
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .button:hover {
   transform: translateY(-2px);
+  border-color: var(--ink-soft);
 }
 
 .button.primary {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--albero);
+  border-color: var(--albero);
+  color: #1a1024;
 }
 
-@media (prefers-color-scheme: dark) {
-  .button.primary {
-    background: var(--albero);
-    border-color: var(--albero);
-    color: #241634;
-  }
-  .button.secondary {
-    border-color: var(--ink);
-  }
+.button.primary:hover {
+  background: var(--albero-soft);
+  border-color: var(--albero-soft);
+  box-shadow: 0 10px 30px -10px rgba(231, 178, 74, 0.55);
+}
+
+/* Inline text links on the landing: color and a moving arrow instead of an underline. */
+.link {
+  color: var(--violet-soft);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.link .arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.link:hover .arrow {
+  transform: translateX(4px);
 }
 
 .copy {
@@ -163,16 +205,25 @@ section {
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   border-radius: 12px;
-  border: 1.5px dashed currentColor;
-  background: transparent;
-  color: inherit;
+  border: 1.5px dashed var(--line-strong);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--ink);
   font: 500 15px var(--mono);
   cursor: pointer;
+  max-width: 100%;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.copy:hover {
+  border-color: var(--albero);
+  background: rgba(231, 178, 74, 0.06);
 }
 
 .copy span[data-copied] {
   font: 600 12px var(--body);
-  opacity: 0.7;
+  color: var(--ink-faint);
 }
 
 @media (max-width: 820px) {

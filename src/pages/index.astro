@@ -1,4 +1,5 @@
 ---
+import BuiltOn from "../components/landing/BuiltOn.astro";
 import Closing from "../components/landing/Closing.astro";
 import CodeSample from "../components/landing/CodeSample.astro";
 import Enforcement from "../components/landing/Enforcement.astro";
@@ -11,13 +12,14 @@ const repoUrl = process.env.BULL_REPO_URL;
 ---
 
 <Landing
-  title="Bull · The React bundler that enforces MVVM"
-  description="Bull is a React bundler that refuses to build unless your code respects Model–View–ViewModel, and explains every violation."
+  title="Bull · The React framework that enforces MVVM"
+  description="Bull is an opinionated React framework that refuses to build unless your code respects Model–View–ViewModel, and explains every violation. Built on Vite and React."
 >
-  <Hero repoUrl={repoUrl} />
+  <Hero />
   <main>
     <Layers />
     <Enforcement />
+    <BuiltOn />
     <Tooling />
     <CodeSample />
   </main>

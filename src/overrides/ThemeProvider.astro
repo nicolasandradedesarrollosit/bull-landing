@@ -1,0 +1,11 @@
+---
+/**
+ * The site is dark only. Starlight renders `data-theme="dark"` on <html>; there is nothing to read from
+ * storage, so there is no theme flash when a page loads or the client router swaps it.
+ */
+---
+
+<script is:inline>
+  document.documentElement.dataset.theme = "dark";
+  window.StarlightThemeProvider = { updatePickers() {} };
+</script>

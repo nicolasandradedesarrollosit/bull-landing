@@ -1,0 +1,40 @@
+---
+/**
+ * Starlight's <head> plus Astro's client router: moving between doc pages swaps the content in place
+ * instead of loading a whole new document, so the header, the sidebar and the fonts stay put.
+ */
+import Default from "@astrojs/starlight/components/Head.astro";
+import { ClientRouter } from "astro:transitions";
+---
+
+<Default />
+<ClientRouter fallback="swap" />
+
+<script>
+  // Starlight saves the sidebar's scroll and open groups when the page unloads, which no longer happens
+  // with the client router. Carry them over to the incoming sidebar instead, so it does not jump.
+  let sidebarScroll = 0;
+
+  document.addEventListener("astro:before-swap", (event) => {
+    const current = document.querySelector(".sidebar-content");
+    const incoming = event.newDocument.querySelector(".sidebar-content");
+    sidebarScroll = document.querySelector(".sidebar-pane")?.scrollTop ?? 0;
+    if (!current || !incoming) return;
+    const open = [...current.querySelectorAll("details")].map((group) => group.open);
+    const groups = incoming.querySelectorAll("details");
+    // Same sidebar, same groups: keep every group the reader opened (the current one is open already).
+    if (groups.length === open.length) groups.forEach((group, i) => open[i] && (group.open = true));
+  });
+
+  document.addEventListener("astro:after-swap", () => {
+    const pane = document.querySelector(".sidebar-pane");
+    if (!pane) return;
+    pane.scrollTop = sidebarScroll;
+    // If the current page ended up out of view, bring it in.
+    const current = pane.querySelector<HTMLElement>('a[aria-current="page"]');
+    if (!current) return;
+    const { top, bottom } = current.getBoundingClientRect();
+    const box = pane.getBoundingClientRect();
+    if (top < box.top || bottom > box.bottom) current.scrollIntoView({ block: "center" });
+  });
+</script>

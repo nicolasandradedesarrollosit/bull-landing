@@ -47,11 +47,11 @@ export function CartView() {
     <div class="pair">
       <div>
         <p class="label">src/viewmodel/cart.viewmodel.ts</p>
-        <Code code={viewModel} lang="ts" theme="github-dark-dimmed" />
+        <Code code={viewModel} lang="ts" theme="github-dark-dimmed" wrap />
       </div>
       <div>
         <p class="label">src/view/cart.view.tsx</p>
-        <Code code={view} lang="tsx" theme="github-dark-dimmed" />
+        <Code code={view} lang="tsx" theme="github-dark-dimmed" wrap />
       </div>
     </div>
   </div>
@@ -64,14 +64,18 @@ export function CartView() {
     gap: var(--space-5);
   }
 
+  /* Long lines wrap: the cards never scroll sideways. */
   .pair :global(pre) {
     margin: 0;
     padding: var(--space-5);
     border-radius: 14px;
+    border: 1px solid var(--line);
     background: var(--terminal) !important;
     font-size: 13px;
     line-height: 1.65;
-    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow-x: hidden !important;
   }
 
   .label {
@@ -80,7 +84,7 @@ export function CartView() {
     color: var(--ink-soft);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     .pair {
       grid-template-columns: minmax(0, 1fr);
     }

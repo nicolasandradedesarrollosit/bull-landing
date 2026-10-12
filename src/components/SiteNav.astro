@@ -1,0 +1,113 @@
+---
+/**
+ * The site's navigation: the same component, markup and styles on the landing and in the docs header,
+ * so moving between them only swaps the page content.
+ */
+import BullMark from "./landing/BullMark.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const repoUrl = process.env.BULL_REPO_URL;
+const path = Astro.url.pathname.replace(base, "") || "/";
+
+const links = [
+  { label: "Docs", href: "/docs/introduction/", active: path.startsWith("/docs/") && !/^\/docs\/(cli|rules)\//.test(path) },
+  { label: "CLI", href: "/docs/cli/overview/", active: path.startsWith("/docs/cli/") },
+  { label: "Rules", href: "/docs/rules/", active: path.startsWith("/docs/rules/") },
+];
+---
+
+<nav class="site-nav" aria-label="Main">
+  <a class="brand" href={`${base}/`} aria-label="Bull, home">
+    <BullMark size={30} />
+    <span>bull</span>
+  </a>
+  <ul class="links">
+    {
+      links.map((link) => (
+        <li>
+          <a href={`${base}${link.href}`} aria-current={link.active ? "page" : undefined}>
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+    {
+      repoUrl && (
+        <li>
+          <a href={repoUrl} class="external">
+            GitHub
+          </a>
+        </li>
+      )
+    }
+  </ul>
+</nav>
+
+<style>
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-width: 0;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #f3eefa;
+    text-decoration: none;
+    font: 800 26px/1 "Big Shoulders Display", "Arial Narrow", sans-serif;
+    letter-spacing: 0.03em;
+    border-radius: 10px;
+    transition: opacity 0.15s ease;
+  }
+
+  .brand:hover {
+    opacity: 0.85;
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: #a39ab5;
+    font: 600 14.5px/1.2 "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+    text-decoration: none;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .links a:hover {
+    color: #f3eefa;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .links a[aria-current="page"] {
+    color: #f3eefa;
+    background: rgba(139, 114, 255, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(139, 114, 255, 0.35);
+  }
+
+  .links a.external::after {
+    content: " ↗";
+    font-size: 0.85em;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 520px) {
+    .links li:nth-child(n + 2) {
+      display: none;
+    }
+  }
+</style>

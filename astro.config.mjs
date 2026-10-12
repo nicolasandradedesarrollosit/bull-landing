@@ -10,13 +10,23 @@ const repoUrl = process.env.BULL_REPO_URL;
 export default defineConfig({
   site,
   base,
+  // Pages are fetched on hover, so the client router swaps them in without waiting.
+  prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   integrations: [
     starlight({
       title: "Bull",
-      description: "The React bundler that refuses to build unless you respect MVVM.",
+      description: "The opinionated React framework that refuses to build unless you respect MVVM.",
       logo: { src: "./src/assets/bull-logo.svg", alt: "Bull logo" },
       favicon: "/favicon.svg",
       social: repoUrl ? [{ icon: "github", label: "GitHub", href: repoUrl }] : [],
+      components: {
+        Head: "./src/overrides/Head.astro",
+        Header: "./src/overrides/Header.astro",
+        ThemeProvider: "./src/overrides/ThemeProvider.astro",
+        ThemeSelect: "./src/overrides/ThemeSelect.astro",
+      },
+      // Long lines wrap instead of scrolling sideways.
+      expressiveCode: { defaultProps: { wrap: true }, themes: ["github-dark-dimmed"] },
       customCss: [
         "@fontsource/big-shoulders-display/800",
         "@fontsource-variable/hanken-grotesk",
@@ -42,6 +52,7 @@ export default defineConfig({
             { label: "ESLint plugin", slug: "docs/eslint" },
           ],
         },
+        { label: "Contributing", slug: "docs/contributing" },
         { label: "Rules", collapsed: true, items: [{ autogenerate: { directory: "docs/rules" } }] },
       ],
     }),

@@ -1,0 +1,44 @@
+---
+/** The docs header: the same navigation as the landing, plus Starlight's search and social links. */
+import Search from "virtual:starlight/components/Search";
+import SocialIcons from "virtual:starlight/components/SocialIcons";
+import SiteNav from "../components/SiteNav.astro";
+---
+
+<div class="header">
+  <SiteNav />
+  <!-- Persisted across page swaps: Pagefind mounts into it once, on the first full load. -->
+  <div class="search print:hidden" transition:persist="site-search">
+    <Search />
+  </div>
+  <div class="social sl-hidden md:sl-flex print:hidden">
+    <SocialIcons />
+  </div>
+</div>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sl-nav-gap);
+    height: 100%;
+  }
+
+  .search {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .social {
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (max-width: 50rem) {
+    .header :global(.links) {
+      display: none;
+    }
+  }
+</style>

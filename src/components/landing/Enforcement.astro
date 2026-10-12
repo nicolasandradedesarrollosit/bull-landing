@@ -46,8 +46,11 @@ const places = [
 
 <style>
   .enforce {
+    background: var(--surface);
     border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
+
 
   .grid {
     display: grid;
@@ -64,7 +67,9 @@ const places = [
     width: 100%;
     height: auto;
     border-radius: 14px;
-    box-shadow: 0 24px 48px -24px rgba(36, 22, 52, 0.5);
+    box-shadow:
+      0 30px 60px -30px rgba(0, 0, 0, 0.9),
+      0 0 0 1px var(--line);
   }
 
   figcaption {
@@ -79,16 +84,17 @@ const places = [
 
   .places div {
     padding-block: var(--space-5);
-    border-top: 2px solid var(--ink);
+    border-top: 1px solid var(--line-strong);
   }
 
   .places div:last-child {
-    border-bottom: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line-strong);
   }
 
   dt code {
     font-size: 17px;
     font-weight: 700;
+    color: var(--albero);
   }
 
   dd {
