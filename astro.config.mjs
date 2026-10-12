@@ -22,6 +22,7 @@ export default defineConfig({
       components: {
         Head: "./src/overrides/Head.astro",
         Header: "./src/overrides/Header.astro",
+        Hero: "./src/overrides/Hero.astro",
         ThemeProvider: "./src/overrides/ThemeProvider.astro",
         ThemeSelect: "./src/overrides/ThemeSelect.astro",
       },

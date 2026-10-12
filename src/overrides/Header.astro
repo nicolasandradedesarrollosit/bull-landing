@@ -36,8 +36,10 @@ import SiteNav from "../components/SiteNav.astro";
     align-items: center;
   }
 
+  /* In the docs, the mobile menu lists every page, so the links make room for it. The landing has no
+     sidebar or menu: there they stay. */
   @media (max-width: 50rem) {
-    .header :global(.links) {
+    :global(:root[data-has-sidebar]) .header :global(.links) {
       display: none;
     }
   }

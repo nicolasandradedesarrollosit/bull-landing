@@ -71,12 +71,15 @@ const screen = lines
 </header>
 
 <script>
-  const screen = document.querySelector<HTMLElement>(".terminal .screen");
-  document.querySelector(".terminal .replay")?.addEventListener("click", () => {
-    if (!screen) return;
-    screen.removeAttribute("data-playing");
-    void screen.offsetWidth; // restart the CSS animations
-    screen.setAttribute("data-playing", "");
+  // Module scripts run once with the client router: wire the button on every page load.
+  document.addEventListener("astro:page-load", () => {
+    const screen = document.querySelector<HTMLElement>(".terminal .screen");
+    document.querySelector(".terminal .replay")?.addEventListener("click", () => {
+      if (!screen) return;
+      screen.removeAttribute("data-playing");
+      void screen.offsetWidth; // restart the CSS animations
+      screen.setAttribute("data-playing", "");
+    });
   });
 </script>
 

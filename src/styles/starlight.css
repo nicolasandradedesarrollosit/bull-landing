@@ -28,6 +28,66 @@
   color-scheme: dark;
 }
 
+/* ─── Scrollbars: a thin violet thumb on the page's own background ─────── */
+
+:root {
+  --bull-scroll-thumb: rgba(139, 114, 255, 0.35);
+  --bull-scroll-thumb-hover: rgba(139, 114, 255, 0.6);
+  --bull-scroll-track: #09060f;
+  /* Inherited: the page, the sidebar, tables and the search dialog all pick it up. */
+  scrollbar-color: var(--bull-scroll-thumb) var(--bull-scroll-track);
+}
+
+:root:hover {
+  scrollbar-color: var(--bull-scroll-thumb-hover) var(--bull-scroll-track);
+}
+
+.sidebar-pane,
+.right-sidebar,
+.sl-markdown-content table,
+.pagefind-ui__drawer,
+site-search dialog {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bull-scroll-thumb) transparent;
+}
+
+.sidebar-pane:hover,
+.right-sidebar:hover,
+.sl-markdown-content table:hover,
+.pagefind-ui__drawer:hover,
+site-search dialog:hover {
+  scrollbar-color: var(--bull-scroll-thumb-hover) transparent;
+}
+
+/* Browsers without scrollbar-color (older Safari) style the WebKit pseudo-elements instead. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--bull-scroll-thumb);
+    border: 2px solid var(--bull-scroll-track);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bull-scroll-thumb-hover);
+  }
+
+  .sidebar-pane::-webkit-scrollbar,
+  .right-sidebar::-webkit-scrollbar,
+  .sl-markdown-content table::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
 /* ─── Header ─────────────────────────────────────────────────────────────── */
 
 .page > .header {

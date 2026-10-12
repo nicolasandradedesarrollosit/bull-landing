@@ -37,21 +37,28 @@
 
   --gutter: clamp(16px, 4vw, 48px);
   --max: 1180px;
-  --topbar: 64px;
   color-scheme: dark;
 }
 
-* {
-  box-sizing: border-box;
+/* The landing lives inside Starlight's page (src/layouts/Landing.astro), under the same header as the
+   docs. These rules drop Starlight's content padding and width only around it, so its sections run
+   edge to edge, and every other rule here is scoped to `.landing`. */
+main:has(> .content-panel .landing),
+.content-panel:has(.landing) {
+  padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--topbar);
+.sl-container:has(.landing) {
+  max-width: none;
+  margin-inline: 0;
 }
 
-body {
-  margin: 0;
+/* Starlight's page footer (edit link, pagination) is empty here. */
+.sl-container:has(.landing) > footer {
+  display: none;
+}
+
+.landing {
   background: var(--paper);
   color: var(--ink);
   font: 17px/1.6 var(--body);
@@ -59,23 +66,29 @@ body {
   overflow-x: clip;
 }
 
-a {
+.landing *,
+.landing *::before,
+.landing *::after {
+  box-sizing: border-box;
+}
+
+.landing a {
   color: inherit;
 }
 
-::selection {
+.landing ::selection {
   background: rgba(139, 114, 255, 0.4);
 }
 
-:focus-visible {
+.landing :focus-visible {
   outline: 3px solid var(--violet);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-code,
-pre,
-kbd {
+.landing code,
+.landing pre,
+.landing kbd {
   font-family: var(--mono);
 }
 
@@ -84,23 +97,6 @@ kbd {
   margin: 0 auto;
   /* Inline only: components add .wrap next to their own block padding (.stage). */
   padding-inline: var(--gutter);
-}
-
-/* The same navigation as the docs header, pinned to the top. */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: var(--topbar);
-  background: rgba(9, 6, 15, 0.78);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
-}
-
-.topbar .wrap {
-  height: 100%;
-  display: flex;
-  align-items: center;
 }
 
 /* Poster headings: condensed, uppercase, tight. Used only for h1/h2. */
@@ -121,7 +117,7 @@ kbd {
   margin: 0 0 var(--space-5);
 }
 
-section {
+.landing section {
   padding-block: var(--section-y);
 }
 

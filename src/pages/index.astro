@@ -16,12 +16,12 @@ const repoUrl = process.env.BULL_REPO_URL;
   description="Bull is an opinionated React framework that refuses to build unless your code respects Model–View–ViewModel, and explains every violation. Built on Vite and React."
 >
   <Hero />
-  <main>
+  <div class="sections">
     <Layers />
     <Enforcement />
     <BuiltOn />
     <Tooling />
     <CodeSample />
-  </main>
+  </div>
   <Closing repoUrl={repoUrl} />
 </Landing>

@@ -1,27 +1,38 @@
 ---
+// Logos from the CC0 "logos" set (gilbarbara/logos, via Iconify), inlined as SVG components.
+import KnockoutLogo from "../../assets/logos/knockout.svg";
+import ReactLogo from "../../assets/logos/react.svg";
+import ViteLogo from "../../assets/logos/vite.svg";
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const pillars = [
   {
     name: "Vite",
+    Logo: ViteLogo,
+    wordmark: false,
     role: "The bundler",
-    color: "var(--albero)",
+    color: "#bd34fe",
     text: "The dev server, hot reload and the production build are Vite. Bull checks the architecture first and adds the dev overlay as a Vite plugin. Anything Vite can do goes under vite in bull.config.ts.",
     sample: "bull build → check → vite build",
     href: "/docs/configuration/",
   },
   {
     name: "React",
+    Logo: ReactLogo,
+    wordmark: false,
     role: "The View",
-    color: "var(--violet)",
+    color: "#00d8ff",
     text: "Views are plain React function components. useBinding subscribes them to a ViewModel through useSyncExternalStore, so they re-render only when what they read changes. React 18 and 19 both work.",
     sample: "useBinding(vm.total)",
     href: "/docs/runtime/react/",
   },
   {
     name: "Knockout",
+    Logo: KnockoutLogo,
+    wordmark: true,
     role: "The idea",
-    color: "var(--rose)",
+    color: "#e42e16",
     text: "Knockout.js brought MVVM to the browser with observables, computeds and declarative bindings. Bull keeps that model, typed and testable, without bindings in the HTML: the View is React, the ViewModel a class.",
     sample: "ko.observable → this.state",
     href: "/docs/runtime/reactivity/",
@@ -46,6 +57,9 @@ const pillars = [
       {
         pillars.map((p) => (
           <a class="pillar" href={`${base}${p.href}`} style={`--accent:${p.color}`}>
+            <span class:list={["logo", { wordmark: p.wordmark }]}>
+              <p.Logo aria-hidden="true" />
+            </span>
             <span class="role">{p.role}</span>
             <h3>{p.name}</h3>
             <p>{p.text}</p>
@@ -102,6 +116,28 @@ const pillars = [
 
   .pillar:hover::before {
     opacity: 0.24;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    margin-bottom: var(--space-2);
+  }
+
+  .logo :global(svg) {
+    height: 40px;
+    width: auto;
+    transition: transform 0.2s ease;
+  }
+
+  /* Knockout's logo is a wordmark: shorter, so it reads at the same weight as the icons. */
+  .logo.wordmark :global(svg) {
+    height: 26px;
+  }
+
+  .pillar:hover .logo :global(svg) {
+    transform: scale(1.06);
   }
 
   .role {

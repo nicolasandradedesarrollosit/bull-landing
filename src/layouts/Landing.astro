@@ -1,7 +1,11 @@
 ---
-import SiteNav from "../components/SiteNav.astro";
+/**
+ * The landing inside Starlight's own page: the same header, search, client router and theme as the
+ * docs, so the navbar never changes and moving between them never reloads. The `splash` template
+ * drops the sidebar; `hero` drops Starlight's title panel (the Hero override renders nothing).
+ */
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import "../styles/landing.css";
-import Base from "./Base.astro";
 
 interface Props {
   title: string;
@@ -11,16 +15,30 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<Base title={title} description={description}>
-  <header class="topbar">
-    <div class="wrap">
-      <SiteNav />
-    </div>
-  </header>
-  <slot />
-  <script>
-    // Copy-to-clipboard for the install commands.
-    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+<StarlightPage
+  frontmatter={{
+    title: "Bull",
+    description,
+    template: "splash",
+    hero: { title: "Bull" },
+    pagefind: false,
+    prev: false,
+    next: false,
+    editUrl: false,
+    lastUpdated: false,
+    head: [{ tag: "title", content: title }],
+  }}
+>
+  <div class="landing not-content">
+    <slot />
+  </div>
+</StarlightPage>
+
+<script>
+  // Copy-to-clipboard for the install commands. Module scripts run once with the client router, so
+  // the buttons are wired on every page load, including when the landing is swapped back in.
+  document.addEventListener("astro:page-load", () => {
+    for (const button of document.querySelectorAll<HTMLButtonElement>(".landing [data-copy]")) {
       button.addEventListener("click", async () => {
         const label = button.querySelector("[data-copied]");
         try {
@@ -32,5 +50,5 @@ const { title, description } = Astro.props;
         setTimeout(() => label && (label.textContent = "Copy"), 1600);
       });
     }
-  </script>
-</Base>
+  });
+</script>
