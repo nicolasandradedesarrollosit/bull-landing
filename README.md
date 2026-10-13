@@ -66,7 +66,7 @@ Every push to `main` builds the site with `BASE_PATH=/<repository>/` and deploys
 `https://<owner>.github.io/<repository>/`. To build the same thing locally:
 
 ```bash
-BASE_PATH=/bull-docs SITE_URL=https://<owner>.github.io npm run build
+BASE_PATH=/bull-landing SITE_URL=https://<owner>.github.io npm run build
 ```
 
 ## License
