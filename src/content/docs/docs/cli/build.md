@@ -35,5 +35,5 @@ them to errors in [bull.config.ts](../../configuration/) if you want them to.
 | `--mode <mode>` | Vite mode, for `.env.<mode>` files. Defaults to `production`. |
 | `--config <file>` | Use this file instead of `bull.config.ts`. |
 
-Using Vite directly? Add `bullPlugin()` from `@bull/cli` to your `vite.config.ts`: it runs the
+Using Vite directly? Add `bullPlugin()` from `@bull-js/cli` to your `vite.config.ts`: it runs the
 same check in `buildStart` and fails the build on errors.

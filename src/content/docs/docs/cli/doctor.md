@@ -12,14 +12,14 @@ bull doctor [root]
 ```
   ✓ Node.js 24.19.0
   ✓ React 19.3.0
-  ✓ @bull/runtime 0.2.0
+  ✓ @bull-js/runtime 0.2.0
   ✓ A single copy of React
   ✓ Vite 8.3.4
   ✓ bull.config.ts loads
   ✓ index.html loads /src/main.tsx
   ✓ tsconfig.json uses react-jsx and strict mode
   ✓ src/model, src/viewmodel and src/view exist
-  ✓ ESLint uses @bull/eslint-plugin
+  ✓ ESLint uses @bull-js/eslint-plugin
   ✓ Architecture respects MVVM
 
   Healthy
@@ -29,8 +29,8 @@ bull doctor [root]
 |---|---|
 | Node.js | The version is older than 20. |
 | React | `react` or `react-dom` is missing, or their versions differ. |
-| `@bull/runtime` | It is not installed. |
-| Single copy of React | The app and `@bull/runtime` resolve different copies (the cause of "Invalid hook call"). |
+| `@bull-js/runtime` | It is not installed. |
+| Single copy of React | The app and `@bull-js/runtime` resolve different copies (the cause of "Invalid hook call"). |
 | `bull.config` | It does not load, or has invalid values (MVVM900). |
 | `index.html` | It is missing. Warns when it does not load the composition root. |
 | Layers | A layer folder or the composition root is missing. |

@@ -1,7 +1,7 @@
 ---
 import { Code } from "astro:components";
 
-const viewModel = `import { ViewModel } from "@bull/runtime";
+const viewModel = `import { ViewModel } from "@bull-js/runtime";
 import type { CartRepository } from "../model/cart.repository";
 
 export class CartViewModel extends ViewModel {
@@ -23,7 +23,7 @@ export class CartViewModel extends ViewModel {
 const view = `import {
   useBinding,
   useViewModel,
-} from "@bull/runtime/react";
+} from "@bull-js/runtime/react";
 import { CartViewModel } from "../viewmodel/cart.viewmodel";
 
 export function CartView() {

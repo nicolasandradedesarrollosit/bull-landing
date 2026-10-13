@@ -27,7 +27,7 @@ Every rule has a stable code and an ESLint slug. Run `bull explain <code>` for t
 | [MVVM202](./mvvm202/) | The View never writes state: it asks the ViewModel to do it through commands. | error | no |
 | [MVVM203](./mvvm203/) | Filtering, sorting or aggregating data is the job of a ViewModel computed. | warning | yes |
 | [MVVM204](./mvvm204/) | ViewModels are obtained with useViewModel(), not with new. | error | no |
-| [MVVM205](./mvvm205/) | The View can only import @bull/runtime/react, not the reactive primitives. | error | no |
+| [MVVM205](./mvvm205/) | The View can only import @bull-js/runtime/react, not the reactive primitives. | error | no |
 | [MVVM206](./mvvm206/) | Reading `vm.x.value` in the View is not reactive: use useBinding(). | warning | yes |
 | [MVVM300](./mvvm300/) | Every file in viewmodel/ exports a class that extends ViewModel. | error | no |
 | [MVVM301](./mvvm301/) | The ViewModel does not access document, window, elements or DOM events. | error | no |
@@ -35,7 +35,7 @@ Every rule has a stable code and an ESLint slug. Run `bull explain <code>` for t
 | [MVVM303](./mvvm303/) | One ViewModel per file, and the class is named after the file. | error | no |
 | [MVVM304](./mvvm304/) | Repositories and services are injected through the constructor, not created with new. | error | no |
 | [MVVM305](./mvvm305/) | Network and storage access belong in the Model. | error | yes |
-| [MVVM400](./mvvm400/) | The Model does not use @bull/runtime: observable state is the ViewModel's business. | error | no |
+| [MVVM400](./mvvm400/) | The Model does not use @bull-js/runtime: observable state is the ViewModel's business. | error | no |
 | [MVVM401](./mvvm401/) | The Model does not know about the DOM. | error | no |
 | [MVVM900](./mvvm900/) | bull.config.ts has an invalid value. | error | no |
 | [MVVM901](./mvvm901/) | The file has a syntax error. | error | no |

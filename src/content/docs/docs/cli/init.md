@@ -17,7 +17,7 @@ leaves everything else alone:
 | `bull.config.ts` | If there is no `bull.config.*`. |
 | `src/model/`, `src/viewmodel/`, `src/view/` | Each folder that does not exist yet. |
 | `dev`, `build`, `preview` and `check` scripts | Each script that is not defined. An existing one, such as `"dev": "vite"`, is kept and reported. |
-| `@bull/runtime`, `@bull/cli` and `@bull/eslint-plugin` | Each one that is not a dependency yet, at the version of the CLI that runs it. |
+| `@bull-js/runtime`, `@bull-js/cli` and `@bull-js/eslint-plugin` | Each one that is not a dependency yet, at the version of the CLI that runs it. |
 
 It needs a `package.json`. To start from nothing, use [`bull create`](../create/).
 
@@ -28,7 +28,7 @@ It needs a `package.json`. To start from nothing, use [`bull create`](../create/
   + src/model/  would create: model layer
   + src/viewmodel/  would create: viewmodel layer
   + src/view/  would create: view layer
-  ~ package.json  would update: adds scripts.build, scripts.preview, scripts.check, @bull/runtime, @bull/cli, @bull/eslint-plugin
+  ~ package.json  would update: adds scripts.build, scripts.preview, scripts.check, @bull-js/runtime, @bull-js/cli, @bull-js/eslint-plugin
   · package.json (keeps scripts.dev ("vite"), left untouched)
 ```
 

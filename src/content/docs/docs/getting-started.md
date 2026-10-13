@@ -8,12 +8,12 @@ Bull needs **Node.js 20 or newer**.
 ## Create a project
 
 ```bash
-npm create @bull@latest my-app
+npm create @bull-js@latest my-app
 cd my-app
 npm run dev
 ```
 
-It works with any package manager (`pnpm create @bull`, `yarn create @bull`, `bun create @bull`)
+It works with any package manager (`pnpm create @bull-js`, `yarn create @bull-js`, `bun create @bull-js`)
 and installs with the one you used. Without a name it asks for the details. See
 [`bull create`](../cli/create/) for the flags, or [`bull init`](../cli/init/) to add Bull to an app
 that already exists.

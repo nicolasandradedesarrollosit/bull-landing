@@ -6,10 +6,10 @@ sidebar:
 ---
 
 ```ts
-import { createBullApp, useBinding, useChildViewModel, useViewModel } from "@bull/runtime/react";
+import { createBullApp, useBinding, useChildViewModel, useViewModel } from "@bull-js/runtime/react";
 ```
 
-`@bull/runtime/react` is the only part of the runtime a View may import
+`@bull-js/runtime/react` is the only part of the runtime a View may import
 ([MVVM205](../../rules/mvvm205/)). It is also the only place in Bull that uses React's own state hooks:
 your Views use these instead. The full table of which React hooks a View may use is in
 [Reactivity, from the inside](../../concepts/reactivity/#react-hooks-in-bull).

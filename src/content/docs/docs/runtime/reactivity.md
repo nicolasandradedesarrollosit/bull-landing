@@ -1,6 +1,6 @@
 ---
 title: Reactivity API
-description: Every member of state, computed, effect, batch and untracked from @bull/runtime.
+description: Every member of state, computed, effect, batch and untracked from @bull-js/runtime.
 sidebar:
   order: 3
 ---
@@ -12,8 +12,8 @@ Inside a ViewModel you use them through `this.state()`, `this.computed()` and `t
 standalone functions are the same primitives, useful in tests and in plain TypeScript:
 
 ```ts
-import { batch, computed, effect, state, untracked } from "@bull/runtime";
-import type { Readable, ReadonlyState } from "@bull/runtime";
+import { batch, computed, effect, state, untracked } from "@bull-js/runtime";
+import type { Readable, ReadonlyState } from "@bull-js/runtime";
 ```
 
 ## `Readable<T>`

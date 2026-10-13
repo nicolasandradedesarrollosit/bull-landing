@@ -286,7 +286,7 @@ export default defineConfig({ view: { allowHooks: ["useState"] } });
 ```
 
 React's state hooks are still used, inside the runtime and only there
-(`@bull/runtime/react`): `useState` holds each component's ViewModel instance, `useEffect` activates
+(`@bull-js/runtime/react`): `useState` holds each component's ViewModel instance, `useEffect` activates
 and deactivates it, `useContext` reaches the dependency container, and `useSyncExternalStore` powers
 `useBinding`.
 

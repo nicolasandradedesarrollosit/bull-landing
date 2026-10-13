@@ -14,7 +14,7 @@ npx bull --help
 | Develop | [`bull` / `bull dev`](../dev/) | Dev server with live architecture checks and the browser overlay. |
 | | [`bull build`](../build/) | Checks the architecture; if it holds, builds for production. |
 | | [`bull preview`](../preview/) | Serves the production build. |
-| | [`bull create`](../create/) | Creates a new project; also `npm create @bull`. |
+| | [`bull create`](../create/) | Creates a new project; also `npm create @bull-js`. |
 | | [`bull init`](../init/) | Adds Bull to an existing project. |
 | Architecture | [`bull check`](../check/) | Only the architecture check, pretty or JSON. |
 | | [`bull explain`](../explain/) | Explains a rule, or lists them all. |

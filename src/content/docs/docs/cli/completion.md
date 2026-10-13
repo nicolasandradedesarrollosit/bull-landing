@@ -20,5 +20,5 @@ your shell's startup file:
 | fish | `bull completion fish > ~/.config/fish/completions/bull.fish` |
 | PowerShell | `bull completion powershell \| Out-String \| Invoke-Expression` in `$PROFILE` |
 
-`bull` must be on your `PATH`: install `@bull/cli` globally, or use `npx bull completion …` and
+`bull` must be on your `PATH`: install `@bull-js/cli` globally, or use `npx bull completion …` and
 point the script at `npx bull`.

@@ -47,7 +47,7 @@ of why it matters, concrete steps to fix it and, for some, an automatic fix.
 | `bull build` | The architecture is checked before Vite runs. Any error stops the build with exit code 1. |
 | `bull dev` | Every change is re-checked. Violations appear in the terminal and in a browser overlay. |
 | `bull check` | Only the check, with `--format json` for CI. |
-| `@bull/eslint-plugin` | The same rules, underlined in your editor. |
+| `@bull-js/eslint-plugin` | The same rules, underlined in your editor. |
 
 ## What it is built on
 
@@ -66,12 +66,12 @@ renders what they say. [Reactivity, from the inside](../concepts/reactivity/) ex
 
 ## What is in the box
 
-- `@bull/runtime`: signals, the `ViewModel` base class, commands, a DI container and React bindings.
-- `@bull/core`: the analyzer and the rule catalog.
-- `@bull/cli`: `dev`, `build`, `preview`, `check`, `explain`, `create` and `init`, plus tooling:
+- `@bull-js/runtime`: signals, the `ViewModel` base class, commands, a DI container and React bindings.
+- `@bull-js/core`: the analyzer and the rule catalog.
+- `@bull-js/cli`: `dev`, `build`, `preview`, `check`, `explain`, `create` and `init`, plus tooling:
   `generate`, `fix`, `graph`, `doctor`, `info` and `completion`.
-- `@bull/create`: `npm create @bull`, the same `create` as its own package.
-- `@bull/eslint-plugin`: the file-level rules for your editor.
+- `@bull-js/create`: `npm create @bull-js`, the same `create` as its own package.
+- `@bull-js/eslint-plugin`: the file-level rules for your editor.
 
 Next: [create your first project](../getting-started/), then read
 [how the reactivity works](../concepts/reactivity/).

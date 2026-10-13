@@ -5,7 +5,7 @@ description: Every option of the Bull configuration file.
 
 ```ts
 // bull.config.ts
-import { defineConfig } from "@bull/cli";
+import { defineConfig } from "@bull-js/cli";
 
 export default defineConfig({
   srcDir: "src",

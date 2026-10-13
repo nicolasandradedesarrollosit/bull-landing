@@ -6,7 +6,7 @@ sidebar:
 ---
 
 ```ts
-import { ViewModel } from "@bull/runtime";
+import { ViewModel } from "@bull-js/runtime";
 
 export class CheckoutViewModel extends ViewModel {
   readonly #items = this.state<CartItem[]>([]);

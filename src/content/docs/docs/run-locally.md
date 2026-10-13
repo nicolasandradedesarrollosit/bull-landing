@@ -51,7 +51,7 @@ cd examples/todo-app && npm run dev
 
 | Script | What it does |
 |---|---|
-| `npm run build` | Builds `@bull/runtime`, `@bull/core`, `@bull/eslint-plugin` and `@bull/cli`. |
+| `npm run build` | Builds `@bull-js/runtime`, `@bull-js/core`, `@bull-js/eslint-plugin` and `@bull-js/cli`. |
 | `npm test` | Unit tests of every package and of the example app's ViewModel. |
 | `npm run test:e2e` | Builds, then runs the CLI binary against the example app and the broken fixtures. |
 | `npm run typecheck` | TypeScript checks of the four packages. |
@@ -64,7 +64,7 @@ packages/
   runtime/        signals, ViewModel, Command, Container, React bindings
   core/           analyzer, rules, formatters, import graph
   cli/            commands, Vite plugin, browser overlay, create template
-  eslint-plugin/  ESLint rules built on @bull/core
+  eslint-plugin/  ESLint rules built on @bull-js/core
 examples/todo-app reference application
 fixtures/         apps broken on purpose, used by the end-to-end tests
 assets/brand/     the bull logo

@@ -3,8 +3,8 @@ title: Contributing
 description: How the Bull repository is built, checked and released.
 ---
 
-Bull is a monorepo of npm workspaces: `@bull/runtime`, `@bull/core`, `@bull/eslint-plugin`,
-`@bull/cli` and `@bull/create`, plus an example app and fixtures that the build must reject. You need
+Bull is a monorepo of npm workspaces: `@bull-js/runtime`, `@bull-js/core`, `@bull-js/eslint-plugin`,
+`@bull-js/cli` and `@bull-js/create`, plus an example app and fixtures that the build must reject. You need
 Node 20 or later; `.nvmrc` pins 22.
 
 ```bash
@@ -43,8 +43,8 @@ npm run changeset
 ```
 
 Pick the packages and the bump (`patch`, `minor`, `major`) and write one line for the changelog. The
-`@bull/*` packages always share one version.
+`@bull-js/*` packages always share one version.
 
 When changesets reach `main`, the release workflow opens a **Version packages** pull request that bumps
 the versions and writes each package's `CHANGELOG.md`. Merging it publishes to npm with provenance.
-The workflow needs an `NPM_TOKEN` secret with publish rights on the `@bull` scope.
+The workflow needs an `NPM_TOKEN` secret with publish rights on the `@bull-js` scope.

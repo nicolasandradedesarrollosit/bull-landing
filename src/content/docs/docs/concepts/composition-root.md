@@ -10,7 +10,7 @@ because its job is to connect them: create the Models, tell the container how to
 ViewModel, and mount the root View.
 
 ```tsx
-import { createBullApp } from "@bull/runtime/react";
+import { createBullApp } from "@bull-js/runtime/react";
 import { TodoRepository } from "./model/todo.repository";
 import { AppView } from "./view/app.view";
 import { TodoListViewModel } from "./viewmodel/todo-list.viewmodel";

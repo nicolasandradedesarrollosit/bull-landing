@@ -1,6 +1,6 @@
 ---
 title: "MVVM205 · View creates reactive state"
-description: "The View can only import @bull/runtime/react, not the reactive primitives."
+description: "The View can only import @bull-js/runtime/react, not the reactive primitives."
 sidebar:
   label: "MVVM205 View creates reactive state"
   order: 18
@@ -8,7 +8,7 @@ sidebar:
 
 > **View** · error · cannot be disabled · ESLint rule: `bull/view-creates-reactive-state`
 
-The View can only import @bull/runtime/react, not the reactive primitives.
+The View can only import @bull-js/runtime/react, not the reactive primitives.
 
 ## Why
 
@@ -17,4 +17,4 @@ The View can only import @bull/runtime/react, not the reactive primitives.
 ## How to fix
 
 1. Remove `the import` from the View and declare it in the ViewModel.
-2. In the View, only import from "@bull/runtime/react" (useViewModel, useBinding).
+2. In the View, only import from "@bull-js/runtime/react" (useViewModel, useBinding).

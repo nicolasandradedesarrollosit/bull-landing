@@ -4,12 +4,12 @@ description: The file-level rules in your editor, with the same codes as the bui
 ---
 
 ```bash
-npm install -D @bull/eslint-plugin eslint
+npm install -D @bull-js/eslint-plugin eslint
 ```
 
 ```js
 // eslint.config.js
-import bull from "@bull/eslint-plugin";
+import bull from "@bull-js/eslint-plugin";
 
 export default [...bull.configs.recommended];
 ```
@@ -29,7 +29,7 @@ The rule names are the slugs of the [rule reference](../rules/), for example
 
 ## Same engine as the build
 
-The plugin does not reimplement anything: it hands ESLint's AST to `@bull/core`, which extracts the
+The plugin does not reimplement anything: it hands ESLint's AST to `@bull-js/core`, which extracts the
 same facts and runs the same rules as `bull build`. All rules share one analysis per file, so
 enabling all of them costs the same as enabling one.
 

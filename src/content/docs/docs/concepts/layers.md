@@ -36,7 +36,7 @@ export class TodoRepository {
 | May | Never |
 |---|---|
 | Import other Models and domain libraries | Import ViewModels or Views ([MVVM102](../../rules/mvvm102/)) |
-| Use `fetch`, storage, IndexedDB | Import React ([MVVM104](../../rules/mvvm104/)) or `@bull/runtime` ([MVVM400](../../rules/mvvm400/)) |
+| Use `fetch`, storage, IndexedDB | Import React ([MVVM104](../../rules/mvvm104/)) or `@bull-js/runtime` ([MVVM400](../../rules/mvvm400/)) |
 | | Touch the DOM ([MVVM401](../../rules/mvvm401/)) |
 
 ## ViewModel
@@ -60,7 +60,7 @@ export class TodoListViewModel extends ViewModel {
 
 | May | Never |
 |---|---|
-| Import the Model and `@bull/runtime` | Import React, `react-dom` or contain JSX ([MVVM103](../../rules/mvvm103/)) |
+| Import the Model and `@bull-js/runtime` | Import React, `react-dom` or contain JSX ([MVVM103](../../rules/mvvm103/)) |
 | Receive dependencies through the constructor | Create repositories with `new` ([MVVM304](../../rules/mvvm304/)) |
 | Expose read-only state, computeds and commands | Expose mutable state ([MVVM302](../../rules/mvvm302/)) |
 | | Touch the DOM ([MVVM301](../../rules/mvvm301/)) or do I/O directly ([MVVM305](../../rules/mvvm305/)) |
@@ -83,7 +83,7 @@ export function TodoListView() {
 
 | May | Never |
 |---|---|
-| Import ViewModels, other Views and `@bull/runtime/react` | Import the Model ([MVVM100](../../rules/mvvm100/)) |
+| Import ViewModels, other Views and `@bull-js/runtime/react` | Import the Model ([MVVM100](../../rules/mvvm100/)) |
 | Use `useViewModel`, `useBinding`, `useRef`, `useId` | Use `useState`, `useEffect`, `useMemo` ([MVVM201](../../rules/mvvm201/)) |
 | Receive data and callbacks through props | Fetch or store data ([MVVM200](../../rules/mvvm200/)) |
 | | Write to the ViewModel ([MVVM202](../../rules/mvvm202/)) |
