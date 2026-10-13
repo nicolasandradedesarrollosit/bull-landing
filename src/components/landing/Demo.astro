@@ -1,0 +1,59 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<section class="demo">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">See it</p>
+        <h2 class="poster">Break it.<br />Fix it. Ship it.</h2>
+      </div>
+      <p>
+        A View imports the Model and keeps its own state. ESLint underlines it, <code>bull build</code>
+        refuses with the reason, and once the View binds to its ViewModel it builds. Every message is
+        Bull's real output.
+      </p>
+    </div>
+
+    <figure class="player">
+      <video
+        src={`${base}/media/bull-demo.mp4`}
+        poster={`${base}/media/bull-demo-poster.png`}
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="A View that breaks MVVM is caught by ESLint and bull build, rewritten with useViewModel and useBinding, and then builds"
+      ></video>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .demo {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .player {
+    margin: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+    background: var(--terminal);
+    aspect-ratio: 16 / 9;
+  }
+
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .section-head code {
+    color: var(--albero);
+    font-size: 0.95em;
+  }
+</style>
